@@ -1,0 +1,28 @@
+[package]
+name = "my-project-name"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+publish = false
+
+[dependencies]
+solana-program = "1.15.2"
+shank = "0.0.12"
+borsh = "0.10.3"
+thiserror = "~1.0"
+num-derive = "0.3.3"
+num-traits = "~0.2"
+
+
+[features]
+test-bpf = []
+
+[dev-dependencies]
+assert_matches = "1.5.0"
+solana-program-test = "=1.15.2"
+solana-sdk = "=1.15.2"
+solana-validator = "=1.15.2"
+solana-logger = "=1.15.2"
+
+[lib]
+crate-type = ["cdylib", "lib"]

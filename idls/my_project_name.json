@@ -1,0 +1,94 @@
+{
+  "version": "0.1.0",
+  "name": "my_project_name",
+  "instructions": [
+    {
+      "name": "InstructionThing",
+      "accounts": [
+        {
+          "name": "signedWritableAccount",
+          "isMut": true,
+          "isSigner": true,
+          "desc": "signed, writable account description"
+        },
+        {
+          "name": "writableAccount",
+          "isMut": true,
+          "isSigner": false,
+          "desc": "writable, non signed account description"
+        },
+        {
+          "name": "nonWritableAccount",
+          "isMut": false,
+          "isSigner": false,
+          "desc": "non signed, non writable account description"
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "desc": "Token program"
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false,
+          "desc": "Rent sysvar"
+        }
+      ],
+      "args": [
+        {
+          "name": "instructionThingArgs",
+          "type": {
+            "defined": "InstructionThingArgs"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 0
+      }
+    }
+  ],
+  "accounts": [
+    {
+      "name": "AccountThingy",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "thing",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "InstructionThingArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 0,
+      "name": "MyErrorName",
+      "msg": "My error message"
+    }
+  ],
+  "metadata": {
+    "origin": "shank",
+    "address": "MyProgram1111111111111111111111111111111111",
+    "binaryVersion": "0.0.12",
+    "libVersion": "0.0.12"
+  }
+}
