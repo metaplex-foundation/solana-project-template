@@ -4,8 +4,8 @@
 # public key with the provided values. Simply update the values
 # below, run "./init.sh" in your terminal and you're good to go!
 
-NAME="mpl-foo-name",
-DESCRIPTION="My foo description",
+NAME="mpl-foo-name"
+DESCRIPTION="My foo description"
 PUBLIC_KEY="MplFoo1111111111111111111111111111111111"
 
 # ------------------------------------
@@ -14,8 +14,8 @@ PUBLIC_KEY="MplFoo1111111111111111111111111111111111"
 
 # Initial variables
 ROOT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-OLD_NAME="mpl-project-name",
-OLD_DESCRIPTION="My project description",
+OLD_NAME="mpl-project-name"
+OLD_DESCRIPTION="My project description"
 OLD_PUBLIC_KEY="MplProgram1111111111111111111111111111111111"
 
 # snake_case
@@ -53,7 +53,10 @@ find $ROOT_DIR \
   ! -name 'README' \
   ! -name '*.sh' \
   -type f -print0 |
-  xargs -0 perl -pi -e "s/mpl-project-name/mpl-foo-name/g"
+  xargs -0 perl -pi -e "s/$OLD_NAME/$NAME/g" |
+  xargs -0 perl -pi -e "s/$SNAKE_OLD_NAME/$SNAKE_NAME/g"
+
+# -exec perl -pi -e "s/$SNAKE_OLD_NAME/$SNAKE_NAME/g" {} +
 
 # ID_FILES=(
 #   "$ROOT_DIR"/program/src/lib.rs
