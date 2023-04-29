@@ -6,4 +6,5 @@
  * @see https://github.com/metaplex-foundation/kinobi
  */
 
-export * from './myAccount';
+export * from './key';
+export * from './myDefinedType';

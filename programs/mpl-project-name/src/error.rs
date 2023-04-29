@@ -7,25 +7,25 @@ use solana_program::{
 use thiserror::Error;
 
 #[derive(Error, Clone, Debug, Eq, PartialEq, FromPrimitive)]
-pub enum ErrorThingy {
+pub enum MplProjectNameError {
     /// My error description
     #[error("My error message")]
     MyErrorName,
 }
 
-impl PrintProgramError for ErrorThingy {
+impl PrintProgramError for MplProjectNameError {
     fn print<E>(&self) {
         msg!(&self.to_string());
     }
 }
 
-impl From<ErrorThingy> for ProgramError {
-    fn from(e: ErrorThingy) -> Self {
+impl From<MplProjectNameError> for ProgramError {
+    fn from(e: MplProjectNameError) -> Self {
         ProgramError::Custom(e as u32)
     }
 }
 
-impl<T> DecodeError<T> for ErrorThingy {
+impl<T> DecodeError<T> for MplProjectNameError {
     fn type_of() -> &'static str {
         "Error Thingy"
     }

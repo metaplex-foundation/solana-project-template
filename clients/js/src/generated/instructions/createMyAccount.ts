@@ -20,7 +20,7 @@ import {
 import { addObjectProperty, isWritable } from '../shared';
 
 // Accounts.
-export type InstructionThingInstructionAccounts = {
+export type CreateMyAccountInstructionAccounts = {
   /** signed, writable account description */
   signedWritableAccount: Signer;
   /** writable, non signed account description */
@@ -34,47 +34,46 @@ export type InstructionThingInstructionAccounts = {
 };
 
 // Data.
-export type InstructionThingInstructionData = {
+export type CreateMyAccountInstructionData = {
   discriminator: number;
   value: bigint;
 };
 
-export type InstructionThingInstructionDataArgs = { value: number | bigint };
+export type CreateMyAccountInstructionDataArgs = { value: number | bigint };
 
-export function getInstructionThingInstructionDataSerializer(
+export function getCreateMyAccountInstructionDataSerializer(
   context: Pick<Context, 'serializer'>
 ): Serializer<
-  InstructionThingInstructionDataArgs,
-  InstructionThingInstructionData
+  CreateMyAccountInstructionDataArgs,
+  CreateMyAccountInstructionData
 > {
   const s = context.serializer;
   return mapSerializer<
-    InstructionThingInstructionDataArgs,
+    CreateMyAccountInstructionDataArgs,
     any,
-    InstructionThingInstructionData
+    CreateMyAccountInstructionData
   >(
-    s.struct<InstructionThingInstructionData>(
+    s.struct<CreateMyAccountInstructionData>(
       [
         ['discriminator', s.u8()],
         ['value', s.u64()],
       ],
-      { description: 'InstructionThingInstructionData' }
+      { description: 'CreateMyAccountInstructionData' }
     ),
     (value) => ({ ...value, discriminator: 0 })
   ) as Serializer<
-    InstructionThingInstructionDataArgs,
-    InstructionThingInstructionData
+    CreateMyAccountInstructionDataArgs,
+    CreateMyAccountInstructionData
   >;
 }
 
 // Args.
-export type InstructionThingInstructionArgs =
-  InstructionThingInstructionDataArgs;
+export type CreateMyAccountInstructionArgs = CreateMyAccountInstructionDataArgs;
 
 // Instruction.
-export function instructionThing(
+export function createMyAccount(
   context: Pick<Context, 'serializer' | 'programs'>,
-  input: InstructionThingInstructionAccounts & InstructionThingInstructionArgs
+  input: CreateMyAccountInstructionAccounts & CreateMyAccountInstructionArgs
 ): TransactionBuilder {
   const signers: Signer[] = [];
   const keys: AccountMeta[] = [];
@@ -148,7 +147,7 @@ export function instructionThing(
 
   // Data.
   const data =
-    getInstructionThingInstructionDataSerializer(context).serialize(
+    getCreateMyAccountInstructionDataSerializer(context).serialize(
       resolvedArgs
     );
 

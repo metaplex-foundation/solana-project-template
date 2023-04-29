@@ -1,4 +1,4 @@
-use crate::instruction::InstructionThingy;
+use crate::instruction::MplProjectNameInstruction;
 use borsh::BorshDeserialize;
 use solana_program::{account_info::AccountInfo, entrypoint::ProgramResult, pubkey::Pubkey};
 
@@ -9,9 +9,10 @@ impl Processor {
         _accounts: &[AccountInfo],
         instruction_data: &[u8],
     ) -> ProgramResult {
-        let instruction: InstructionThingy = InstructionThingy::try_from_slice(instruction_data)?;
+        let instruction: MplProjectNameInstruction =
+            MplProjectNameInstruction::try_from_slice(instruction_data)?;
         match instruction {
-            InstructionThingy::InstructionThing(_args) => {
+            MplProjectNameInstruction::InstructionThing(_args) => {
                 // handle instruction
                 Ok(())
             }

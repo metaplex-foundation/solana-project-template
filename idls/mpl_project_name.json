@@ -3,7 +3,7 @@
   "name": "mpl_project_name",
   "instructions": [
     {
-      "name": "InstructionThing",
+      "name": "CreateMyAccount",
       "accounts": [
         {
           "name": "signedWritableAccount",
@@ -38,9 +38,9 @@
       ],
       "args": [
         {
-          "name": "instructionThingArgs",
+          "name": "createMyAccountArgs",
           "type": {
-            "defined": "InstructionThingArgs"
+            "defined": "CreateMyAccountArgs"
           }
         }
       ],
@@ -52,13 +52,25 @@
   ],
   "accounts": [
     {
-      "name": "AccountThingy",
+      "name": "MyAccount",
       "type": {
         "kind": "struct",
         "fields": [
           {
+            "name": "key",
+            "type": {
+              "defined": "Key"
+            }
+          },
+          {
             "name": "thing",
             "type": "u8"
+          },
+          {
+            "name": "definedType",
+            "type": {
+              "defined": "MyDefinedType"
+            }
           }
         ]
       }
@@ -66,13 +78,39 @@
   ],
   "types": [
     {
-      "name": "InstructionThingArgs",
+      "name": "CreateMyAccountArgs",
       "type": {
         "kind": "struct",
         "fields": [
           {
             "name": "value",
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MyDefinedType",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "anotherThing",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Key",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Uninitialized"
+          },
+          {
+            "name": "MyAccount"
           }
         ]
       }
