@@ -16,7 +16,7 @@ PUBLIC_KEY="MplFoo1111111111111111111111111111111111"
 ROOT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 OLD_NAME="mpl-project-name"
 OLD_DESCRIPTION="My project description"
-OLD_PUBLIC_KEY="MplProgram1111111111111111111111111111111111"
+OLD_PUBLIC_KEY="MyProgram1111111111111111111111111111111111"
 
 # snake_case
 SNAKE_NAME=$(echo "$NAME" | perl -pe 's/-/_/g')
