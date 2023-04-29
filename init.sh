@@ -34,17 +34,17 @@ PASCAL_OLD_NAME=$(echo "$OLD_NAME" | perl -pe 's/(^|-)(\w)/\U$2/g')
 TITLE_NAME=$(echo "$PASCAL_NAME" | perl -pe 's/(\B[A-Z])/ $1/g')
 TITLE_OLD_NAME=$(echo "$PASCAL_OLD_NAME" | perl -pe 's/(\B[A-Z])/ $1/g')
 
-echo "ROOT_DIR: $ROOT_DIR"
-echo "OLD_NAME: $OLD_NAME"
-echo "NAME: $NAME"
-echo "SNAKE_NAME: $SNAKE_NAME"
-echo "SNAKE_OLD_NAME: $SNAKE_OLD_NAME"
-echo "CAMEL_NAME: $CAMEL_NAME"
-echo "CAMEL_OLD_NAME: $CAMEL_OLD_NAME"
-echo "PASCAL_NAME: $PASCAL_NAME"
-echo "PASCAL_OLD_NAME: $PASCAL_OLD_NAME"
-echo "TITLE_NAME: $TITLE_NAME"
-echo "TITLE_OLD_NAME: $TITLE_OLD_NAME"
+echo "ROOT_DIR: [$ROOT_DIR]"
+echo "OLD_NAME: [$OLD_NAME]"
+echo "NAME: [$NAME]"
+echo "SNAKE_NAME: [$SNAKE_NAME]"
+echo "SNAKE_OLD_NAME: [$SNAKE_OLD_NAME]"
+echo "CAMEL_NAME: [$CAMEL_NAME]"
+echo "CAMEL_OLD_NAME: [$CAMEL_OLD_NAME]"
+echo "PASCAL_NAME: [$PASCAL_NAME]"
+echo "PASCAL_OLD_NAME: [$PASCAL_OLD_NAME]"
+echo "TITLE_NAME: [$TITLE_NAME]"
+echo "TITLE_OLD_NAME: [$TITLE_OLD_NAME]"
 
 find $ROOT_DIR \
   \( -type d -name .git -prune \) -o \
@@ -53,7 +53,7 @@ find $ROOT_DIR \
   ! -name 'README' \
   ! -name '*.sh' \
   -type f -print0 |
-  xargs -0 perl -pi -e 's/$ENV{OLD_NAME}/$ENV{NAME}/g'
+  xargs -0 perl -pi -e "s/mpl-project-name/mpl-foo-name/g"
 
 # ID_FILES=(
 #   "$ROOT_DIR"/program/src/lib.rs
