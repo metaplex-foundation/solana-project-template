@@ -8,7 +8,7 @@
 
 import { Context, Serializer } from '@metaplex-foundation/umi';
 
-export type MyDefinedType = { anotherThing: number };
+export type MyDefinedType = { thing: number; hash: Uint8Array };
 
 export type MyDefinedTypeArgs = MyDefinedType;
 
@@ -16,7 +16,11 @@ export function getMyDefinedTypeSerializer(
   context: Pick<Context, 'serializer'>
 ): Serializer<MyDefinedTypeArgs, MyDefinedType> {
   const s = context.serializer;
-  return s.struct<MyDefinedType>([['anotherThing', s.u8()]], {
-    description: 'MyDefinedType',
-  }) as Serializer<MyDefinedTypeArgs, MyDefinedType>;
+  return s.struct<MyDefinedType>(
+    [
+      ['thing', s.u8()],
+      ['hash', s.bytes({ size: 32 })],
+    ],
+    { description: 'MyDefinedType' }
+  ) as Serializer<MyDefinedTypeArgs, MyDefinedType>;
 }

@@ -63,14 +63,32 @@
             }
           },
           {
-            "name": "thing",
-            "type": "u8"
+            "name": "authority",
+            "type": "publicKey"
           },
           {
-            "name": "definedType",
+            "name": "data",
             "type": {
               "defined": "MyDefinedType"
             }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MyPdaAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "key",
+            "type": {
+              "defined": "Key"
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
           }
         ]
       }
@@ -95,8 +113,17 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "anotherThing",
+            "name": "thing",
             "type": "u8"
+          },
+          {
+            "name": "hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
           }
         ]
       }
@@ -111,6 +138,9 @@
           },
           {
             "name": "MyAccount"
+          },
+          {
+            "name": "MyPdaAccount"
           }
         ]
       }

@@ -7,6 +7,7 @@
  */
 
 import {
+  ACCOUNT_HEADER_SIZE,
   AccountMeta,
   Context,
   PublicKey,
@@ -17,6 +18,7 @@ import {
   publicKey,
   transactionBuilder,
 } from '@metaplex-foundation/umi';
+import { getMyAccountSize } from '../accounts';
 import { addObjectProperty, isWritable } from '../shared';
 
 // Accounts.
@@ -152,7 +154,7 @@ export function createMyAccount(
     );
 
   // Bytes Created On Chain.
-  const bytesCreatedOnChain = 0;
+  const bytesCreatedOnChain = getMyAccountSize() + ACCOUNT_HEADER_SIZE;
 
   return transactionBuilder([
     { instruction: { keys, programId, data }, signers, bytesCreatedOnChain },

@@ -11,6 +11,7 @@ import { Context, Serializer } from '@metaplex-foundation/umi';
 export enum Key {
   Uninitialized,
   MyAccount,
+  MyPdaAccount,
 }
 
 export type KeyArgs = Key;

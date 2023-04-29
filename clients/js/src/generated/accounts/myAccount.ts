@@ -32,13 +32,13 @@ export type MyAccount = Account<MyAccountAccountData>;
 
 export type MyAccountAccountData = {
   key: Key;
-  thing: number;
-  definedType: MyDefinedType;
+  authority: PublicKey;
+  data: MyDefinedType;
 };
 
 export type MyAccountAccountDataArgs = {
-  thing: number;
-  definedType: MyDefinedTypeArgs;
+  authority: PublicKey;
+  data: MyDefinedTypeArgs;
 };
 
 export function getMyAccountAccountDataSerializer(
@@ -49,8 +49,8 @@ export function getMyAccountAccountDataSerializer(
     s.struct<MyAccountAccountData>(
       [
         ['key', getKeySerializer(context)],
-        ['thing', s.u8()],
-        ['definedType', getMyDefinedTypeSerializer(context)],
+        ['authority', s.publicKey()],
+        ['data', getMyDefinedTypeSerializer(context)],
       ],
       { description: 'MyAccountAccountData' }
     ),
@@ -125,12 +125,12 @@ export function getMyAccountGpaBuilder(
   return gpaBuilder(context, programId)
     .registerFields<{
       key: KeyArgs;
-      thing: number;
-      definedType: MyDefinedTypeArgs;
+      authority: PublicKey;
+      data: MyDefinedTypeArgs;
     }>({
       key: [0, getKeySerializer(context)],
-      thing: [1, s.u8()],
-      definedType: [2, getMyDefinedTypeSerializer(context)],
+      authority: [1, s.publicKey()],
+      data: [33, getMyDefinedTypeSerializer(context)],
     })
     .deserializeUsing<MyAccount>((account) =>
       deserializeMyAccount(context, account)
@@ -139,5 +139,5 @@ export function getMyAccountGpaBuilder(
 }
 
 export function getMyAccountSize(): number {
-  return 3;
+  return 66;
 }

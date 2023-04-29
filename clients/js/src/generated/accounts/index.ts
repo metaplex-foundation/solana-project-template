@@ -7,3 +7,4 @@
  */
 
 export * from './myAccount';
+export * from './myPdaAccount';
