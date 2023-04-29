@@ -4,9 +4,9 @@
 # public key with the provided values. Simply update the values
 # below, run "./init.sh" in your terminal and you're good to go!
 
-NAME="mpl-project-name",
-DESCRIPTION="My project description",
-PUBLIC_KEY="MplProgram1111111111111111111111111111111111"
+NAME="mpl-foo-name",
+DESCRIPTION="My foo description",
+PUBLIC_KEY="MplFoo1111111111111111111111111111111111"
 
 # ------------------------------------
 # --- Do not edit below this line. ---
@@ -46,13 +46,14 @@ echo "PASCAL_OLD_NAME: $PASCAL_OLD_NAME"
 echo "TITLE_NAME: $TITLE_NAME"
 echo "TITLE_OLD_NAME: $TITLE_OLD_NAME"
 
-# find $ROOT_DIR \
-#   \( -type d -name .git -prune \) -o \
-#   \( -type d -name node_modules -prune \) -o \
-#   ! -name 'README' \
-#   ! -name '*.sh' \
-#   -type f -print0 |
-#   xargs -0 perl -pi -e "s/mpl-project-name/mpl-foo-bar/g"
+find $ROOT_DIR \
+  \( -type d -name .git -prune \) -o \
+  \( -type d -name node_modules -prune \) -o \
+  \( -type d -name dist -prune \) -o \
+  ! -name 'README' \
+  ! -name '*.sh' \
+  -type f -print0 |
+  xargs -0 perl -pi -e 's/$ENV{OLD_NAME}/$ENV{NAME}/g'
 
 # ID_FILES=(
 #   "$ROOT_DIR"/program/src/lib.rs
