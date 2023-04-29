@@ -50,11 +50,11 @@ find $ROOT_DIR \
   \( -type d -name .git -prune \) -o \
   \( -type d -name node_modules -prune \) -o \
   \( -type d -name dist -prune \) -o \
-  ! -name 'README' \
+  \( -type d -name .crates -prune \) -o \
+  ! -name 'README.md' \
   ! -name '*.sh' \
   -type f -print0 |
-  xargs -0 perl -pi -e "s/$OLD_NAME/$NAME/g" |
-  xargs -0 perl -pi -e "s/$SNAKE_OLD_NAME/$SNAKE_NAME/g"
+  xargs -0 -I % echo %
 
 # -exec perl -pi -e "s/$SNAKE_OLD_NAME/$SNAKE_NAME/g" {} +
 
