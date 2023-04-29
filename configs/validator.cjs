@@ -10,9 +10,9 @@ module.exports = {
     commitment: "processed",
     programs: [
       {
-        label: "Gavel",
+        label: "Mpl Project Name",
         programId: "MyProgram1111111111111111111111111111111111",
-        deployPath: getProgram("my-project-name", "mpl_my_project_name.so"),
+        deployPath: getProgram("mpl-project-name", "mpl_project_name.so"),
       },
     ],
   },

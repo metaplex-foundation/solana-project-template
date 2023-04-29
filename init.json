@@ -1,6 +1,5 @@
 {
-  "name": "my-project-name",
-  "prefix": "mpl",
+  "name": "mpl-project-name",
   "description": "My project description",
-  "publicKey": "MyProgram1111111111111111111111111111111111"
+  "publicKey": "MplProgram1111111111111111111111111111111111"
 }
