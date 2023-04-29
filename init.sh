@@ -12,28 +12,47 @@ PUBLIC_KEY="MplProgram1111111111111111111111111111111111"
 # --- Do not edit below this line. ---
 # ------------------------------------
 
+# Initial variables
 ROOT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 OLD_NAME="mpl-project-name",
 OLD_DESCRIPTION="My project description",
 OLD_PUBLIC_KEY="MplProgram1111111111111111111111111111111111"
 
+# snake_case
+SNAKE_NAME=$(echo "$NAME" | perl -pe 's/-/_/g')
+SNAKE_OLD_NAME=$(echo "$OLD_NAME" | perl -pe 's/-/_/g')
+
+# camelCase
+CAMEL_NAME=$(echo "$NAME" | perl -pe 's/-(\w)/\U$1/g')
+CAMEL_OLD_NAME=$(echo "$OLD_NAME" | perl -pe 's/-(\w)/\U$1/g')
+
+# PascalCase
+PASCAL_NAME=$(echo "$NAME" | perl -pe 's/(^|-)(\w)/\U$2/g')
+PASCAL_OLD_NAME=$(echo "$OLD_NAME" | perl -pe 's/(^|-)(\w)/\U$2/g')
+
+# Title Case
+TITLE_NAME=$(echo "$PASCAL_NAME" | perl -pe 's/(\B[A-Z])/ $1/g')
+TITLE_OLD_NAME=$(echo "$PASCAL_OLD_NAME" | perl -pe 's/(\B[A-Z])/ $1/g')
+
 echo "ROOT_DIR: $ROOT_DIR"
 echo "OLD_NAME: $OLD_NAME"
-echo "OLD_DESCRIPTION: $OLD_DESCRIPTION"
-echo "OLD_PUBLIC_KEY: $OLD_PUBLIC_KEY"
 echo "NAME: $NAME"
-echo "DESCRIPTION: $DESCRIPTION"
-echo "PUBLIC_KEY: $PUBLIC_KEY"
+echo "SNAKE_NAME: $SNAKE_NAME"
+echo "SNAKE_OLD_NAME: $SNAKE_OLD_NAME"
+echo "CAMEL_NAME: $CAMEL_NAME"
+echo "CAMEL_OLD_NAME: $CAMEL_OLD_NAME"
+echo "PASCAL_NAME: $PASCAL_NAME"
+echo "PASCAL_OLD_NAME: $PASCAL_OLD_NAME"
+echo "TITLE_NAME: $TITLE_NAME"
+echo "TITLE_OLD_NAME: $TITLE_OLD_NAME"
 
-# find $ROOT_DIR \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s/mpl-project-name/mpl-foo-bar/g"
-
-find $ROOT_DIR \
-  \( -type d -name .git -prune \) -o \
-  \( -type d -name node_modules -prune \) -o \
-  ! -name 'README' \
-  ! -name '*.sh' \
-  -type f -print0 |
-  xargs -0 perl -pi -e "s/mpl-project-name/mpl-foo-bar/g"
+# find $ROOT_DIR \
+#   \( -type d -name .git -prune \) -o \
+#   \( -type d -name node_modules -prune \) -o \
+#   ! -name 'README' \
+#   ! -name '*.sh' \
+#   -type f -print0 |
+#   xargs -0 perl -pi -e "s/mpl-project-name/mpl-foo-bar/g"
 
 # ID_FILES=(
 #   "$ROOT_DIR"/program/src/lib.rs
