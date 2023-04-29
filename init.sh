@@ -25,6 +25,13 @@ echo "NAME: $NAME"
 echo "DESCRIPTION: $DESCRIPTION"
 echo "PUBLIC_KEY: $PUBLIC_KEY"
 
+# find $ROOT_DIR \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s/mpl-project-name/mpl-foo-bar/g"
+
+find $ROOT_DIR \
+  \( -type d -name .git -prune \) -o \
+  \( -type d -name node_modules -prune \) -o \
+  -type f -print0 | xargs -0 printf "%s\n"
+
 # ID_FILES=(
 #   "$ROOT_DIR"/program/src/lib.rs
 # )
