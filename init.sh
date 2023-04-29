@@ -30,7 +30,7 @@ echo "PUBLIC_KEY: $PUBLIC_KEY"
 find $ROOT_DIR \
   \( -type d -name .git -prune \) -o \
   \( -type d -name node_modules -prune \) -o \
-  -type f -print0 | xargs -0 printf "%s\n"
+  -type f -print0 | xargs -0 perl -pi -e "s/mpl-project-name/mpl-foo-bar/g"
 
 # ID_FILES=(
 #   "$ROOT_DIR"/program/src/lib.rs
