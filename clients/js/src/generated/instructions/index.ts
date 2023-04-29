@@ -6,7 +6,4 @@
  * @see https://github.com/metaplex-foundation/kinobi
  */
 
-export * from './bid';
-export * from './increase';
-export * from './initialize';
-export * from './refund';
+export * from './instructionThing';

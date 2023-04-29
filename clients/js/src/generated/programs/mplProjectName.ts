@@ -13,21 +13,24 @@ import {
   PublicKey,
   publicKey,
 } from '@metaplex-foundation/umi';
-import { getMplGavelErrorFromCode, getMplGavelErrorFromName } from '../errors';
+import {
+  getMplProjectNameErrorFromCode,
+  getMplProjectNameErrorFromName,
+} from '../errors';
 
-export const MPL_GAVEL_PROGRAM_ID = publicKey(
-  'FairV2mqxnkNjniBpESKcF9u2sWrD3uLaP8eXcQHAgXh'
+export const MPL_PROJECT_NAME_PROGRAM_ID = publicKey(
+  'MyProgram1111111111111111111111111111111111'
 );
 
-export function createMplGavelProgram(): Program {
+export function createMplProjectNameProgram(): Program {
   return {
-    name: 'mplGavel',
-    publicKey: MPL_GAVEL_PROGRAM_ID,
+    name: 'mplProjectName',
+    publicKey: MPL_PROJECT_NAME_PROGRAM_ID,
     getErrorFromCode(code: number, cause?: Error) {
-      return getMplGavelErrorFromCode(code, this, cause);
+      return getMplProjectNameErrorFromCode(code, this, cause);
     },
     getErrorFromName(name: string, cause?: Error) {
-      return getMplGavelErrorFromName(name, this, cause);
+      return getMplProjectNameErrorFromName(name, this, cause);
     },
     isOnCluster() {
       return true;
@@ -35,20 +38,20 @@ export function createMplGavelProgram(): Program {
   };
 }
 
-export function getMplGavelProgram<T extends Program = Program>(
+export function getMplProjectNameProgram<T extends Program = Program>(
   context: Pick<Context, 'programs'>,
   clusterFilter?: ClusterFilter
 ): T {
-  return context.programs.get<T>('mplGavel', clusterFilter);
+  return context.programs.get<T>('mplProjectName', clusterFilter);
 }
 
-export function getMplGavelProgramId(
+export function getMplProjectNameProgramId(
   context: Pick<Context, 'programs'>,
   clusterFilter?: ClusterFilter
 ): PublicKey {
   return context.programs.getPublicKey(
-    'mplGavel',
-    MPL_GAVEL_PROGRAM_ID,
+    'mplProjectName',
+    MPL_PROJECT_NAME_PROGRAM_ID,
     clusterFilter
   );
 }

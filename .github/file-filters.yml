@@ -9,12 +9,12 @@ program_common: &program_common
   - ".github/workflows/test-programs.yml"
   - ".github/workflows/main.yml"
 
-gavel_program: &gavel_program
+mpl_project_name: &mpl_project_name
   - *program_common
-  - "programs/system-extras/**"
+  - "programs/mpl-project-name/**"
 
 programs: &programs
-  - *gavel_program
+  - *mpl_project_name
 
 # Clients.
 

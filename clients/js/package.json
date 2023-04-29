@@ -1,5 +1,5 @@
 {
-  "name": "@metaplex-foundation/mpl-gavel",
+  "name": "@metaplex-foundation/mpl-project-name",
   "version": "0.1.0",
   "description": "My project description",
   "main": "dist/src/index.js",

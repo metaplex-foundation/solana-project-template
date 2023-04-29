@@ -6,5 +6,4 @@
  * @see https://github.com/metaplex-foundation/kinobi
  */
 
-export * from './auction';
-export * from './bid';
+export * from './accountThingy';
