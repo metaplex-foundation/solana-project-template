@@ -17,6 +17,7 @@ import {
   assertAccountExists,
   deserializeAccount,
   gpaBuilder,
+  mapSerializer,
 } from '@metaplex-foundation/umi';
 import {
   Key,
@@ -36,7 +37,6 @@ export type MyAccountAccountData = {
 };
 
 export type MyAccountAccountDataArgs = {
-  key: KeyArgs;
   thing: number;
   definedType: MyDefinedTypeArgs;
 };
@@ -45,13 +45,16 @@ export function getMyAccountAccountDataSerializer(
   context: Pick<Context, 'serializer'>
 ): Serializer<MyAccountAccountDataArgs, MyAccountAccountData> {
   const s = context.serializer;
-  return s.struct<MyAccountAccountData>(
-    [
-      ['key', getKeySerializer(context)],
-      ['thing', s.u8()],
-      ['definedType', getMyDefinedTypeSerializer(context)],
-    ],
-    { description: 'MyAccountAccountData' }
+  return mapSerializer<MyAccountAccountDataArgs, any, MyAccountAccountData>(
+    s.struct<MyAccountAccountData>(
+      [
+        ['key', getKeySerializer(context)],
+        ['thing', s.u8()],
+        ['definedType', getMyDefinedTypeSerializer(context)],
+      ],
+      { description: 'MyAccountAccountData' }
+    ),
+    (value) => ({ ...value, key: Key.MyAccount })
   ) as Serializer<MyAccountAccountDataArgs, MyAccountAccountData>;
 }
 
@@ -131,7 +134,8 @@ export function getMyAccountGpaBuilder(
     })
     .deserializeUsing<MyAccount>((account) =>
       deserializeMyAccount(context, account)
-    );
+    )
+    .whereField('key', Key.MyAccount);
 }
 
 export function getMyAccountSize(): number {

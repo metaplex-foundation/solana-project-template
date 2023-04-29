@@ -22,6 +22,13 @@ kinobi.update(
   })
 );
 
+// Set ShankAccount discriminator.
+kinobi.update(
+  new k.SetAccountDiscriminatorFromFieldVisitor({
+    myAccount: { field: "key", value: k.vEnum("Key", "MyAccount") },
+  })
+);
+
 // Render JavaScript.
 const jsDir = path.join(clientDir, "js", "src", "generated");
 const prettier = require(path.join(clientDir, "js", ".prettierrc.json"));
