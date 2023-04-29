@@ -43,7 +43,7 @@ find $ROOT_DIR \
   ! -name 'README.md' \
   ! -name '*.sh' \
   -type f -print0 |
-  xargs -0 perl -pi -e "s/$OLD_NAME/$NAME/g; s/$SNAKE_OLD_NAME/$SNAKE_NAME/g; s/$CAMEL_OLD_NAME/$CAMEL_NAME/g; s/$PASCAL_OLD_NAME/$PASCAL_NAME/g; s/$TITLE_OLD_NAME/$TITLE_NAME/g"
+  xargs -0 perl -pi -e "s/$OLD_NAME/$NAME/g; s/$SNAKE_OLD_NAME/$SNAKE_NAME/g; s/$CAMEL_OLD_NAME/$CAMEL_NAME/g; s/$PASCAL_OLD_NAME/$PASCAL_NAME/g; s/$TITLE_OLD_NAME/$TITLE_NAME/g; s/$OLD_DESCRIPTION/$DESCRIPTION/g; s/$OLD_PUBLIC_KEY/$PUBLIC_KEY/g"
 
 # Update folder names
 # mv "$ROOT_DIR"/packages/sdk/src/"$OLD_NAME_TS".ts "$ROOT_DIR"/packages/sdk/src/"$NEW_NAME_TS".ts
