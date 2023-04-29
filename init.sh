@@ -6,7 +6,7 @@
 
 NAME="mpl-foo-name"
 DESCRIPTION="My foo description"
-PUBLIC_KEY="MplFoo1111111111111111111111111111111111"
+PUBLIC_KEY="MyFoo1111111111111111111111111111111111"
 
 # ------------------------------------
 # --- Do not edit below this line. ---
