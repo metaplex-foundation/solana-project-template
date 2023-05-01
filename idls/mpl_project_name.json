@@ -3,44 +3,38 @@
   "name": "mpl_project_name",
   "instructions": [
     {
-      "name": "CreateMyAccount",
+      "name": "Create",
       "accounts": [
         {
-          "name": "signedWritableAccount",
+          "name": "address",
           "isMut": true,
           "isSigner": true,
-          "desc": "signed, writable account description"
+          "desc": "The address of the new account"
         },
         {
-          "name": "writableAccount",
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false,
+          "desc": "The authority of the new account"
+        },
+        {
+          "name": "payer",
           "isMut": true,
-          "isSigner": false,
-          "desc": "writable, non signed account description"
+          "isSigner": true,
+          "desc": "The account paying for the storage fees"
         },
         {
-          "name": "nonWritableAccount",
+          "name": "systemProgram",
           "isMut": false,
           "isSigner": false,
-          "desc": "non signed, non writable account description"
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false,
-          "desc": "Token program"
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false,
-          "desc": "Rent sysvar"
+          "desc": "The system program"
         }
       ],
       "args": [
         {
-          "name": "createMyAccountArgs",
+          "name": "createArgs",
           "type": {
-            "defined": "CreateMyAccountArgs"
+            "defined": "CreateArgs"
           }
         }
       ],
@@ -69,7 +63,7 @@
           {
             "name": "data",
             "type": {
-              "defined": "MyDefinedType"
+              "defined": "MyData"
             }
           }
         ]
@@ -96,34 +90,33 @@
   ],
   "types": [
     {
-      "name": "CreateMyAccountArgs",
+      "name": "CreateArgs",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "value",
-            "type": "u64"
+            "name": "foo",
+            "type": "u16"
+          },
+          {
+            "name": "bar",
+            "type": "u32"
           }
         ]
       }
     },
     {
-      "name": "MyDefinedType",
+      "name": "MyData",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "thing",
-            "type": "u8"
+            "name": "foo",
+            "type": "u16"
           },
           {
-            "name": "hash",
-            "type": {
-              "array": [
-                "u8",
-                32
-              ]
-            }
+            "name": "bar",
+            "type": "u32"
           }
         ]
       }
@@ -149,8 +142,8 @@
   "errors": [
     {
       "code": 0,
-      "name": "MyErrorName",
-      "msg": "My error message"
+      "name": "InvalidSystemProgram",
+      "msg": "Invalid System Program"
     }
   ],
   "metadata": {

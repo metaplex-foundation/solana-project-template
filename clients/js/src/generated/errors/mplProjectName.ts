@@ -15,18 +15,18 @@ type ProgramErrorConstructor = new (
 const codeToErrorMap: Map<number, ProgramErrorConstructor> = new Map();
 const nameToErrorMap: Map<string, ProgramErrorConstructor> = new Map();
 
-/** MyErrorName: My error message */
-export class MyErrorNameError extends ProgramError {
-  readonly name: string = 'MyErrorName';
+/** InvalidSystemProgram: Invalid System Program */
+export class InvalidSystemProgramError extends ProgramError {
+  readonly name: string = 'InvalidSystemProgram';
 
   readonly code: number = 0x0; // 0
 
   constructor(program: Program, cause?: Error) {
-    super('My error message', program, cause);
+    super('Invalid System Program', program, cause);
   }
 }
-codeToErrorMap.set(0x0, MyErrorNameError);
-nameToErrorMap.set('MyErrorName', MyErrorNameError);
+codeToErrorMap.set(0x0, InvalidSystemProgramError);
+nameToErrorMap.set('InvalidSystemProgram', InvalidSystemProgramError);
 
 /**
  * Attempts to resolve a custom program error from the provided error code.

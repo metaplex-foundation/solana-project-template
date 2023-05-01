@@ -7,4 +7,4 @@
  */
 
 export * from './key';
-export * from './myDefinedType';
+export * from './myData';

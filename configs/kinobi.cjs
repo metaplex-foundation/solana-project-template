@@ -26,7 +26,7 @@ kinobi.update(
 // Update instructions.
 kinobi.update(
   new k.UpdateInstructionsVisitor({
-    createMyAccount: {
+    create: {
       bytesCreatedOnChain: k.bytesFromAccount("myAccount"),
     },
     // ...
