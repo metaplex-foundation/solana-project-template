@@ -12,7 +12,7 @@ impl Processor {
         let instruction: MplProjectNameInstruction =
             MplProjectNameInstruction::try_from_slice(instruction_data)?;
         match instruction {
-            MplProjectNameInstruction::InstructionThing(_args) => {
+            MplProjectNameInstruction::CreateMyAccount(_args) => {
                 // handle instruction
                 Ok(())
             }
