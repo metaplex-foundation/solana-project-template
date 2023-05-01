@@ -1,6 +1,6 @@
 # Contributing to the JavaScript client
 
-This is quick guide to help you contribute to the JavaScript client of Mpl Project Name.
+This is a quick guide to help you contribute to the JavaScript client of Mpl Project Name.
 
 ## Getting started
 
@@ -34,15 +34,15 @@ When something changes in the program(s), make sure to run `pnpm generate` in th
 
 You can deploy a new version of the JavaScript client by manually dispatching the "Deploy JS Client" workflow in the GitHub Actions tab of the repository.
 
-![Click on the "Actions" tab, then on the "Deploy JS Client" workflow, then on the "Run workflow" drowdown. Select your options before clicking on the final "Run workflow" button inside the downdown body.](https://user-images.githubusercontent.com/3642397/235444901-6ee95f30-ed84-4eef-b1c4-8b8474ab82a4.png)
+![Click on the "Actions" tab, then on the "Deploy JS Client" workflow, then on the "Run workflow" dropdown. Select your options before clicking on the final "Run workflow" button inside the dropdown body.](https://user-images.githubusercontent.com/3642397/235444901-6ee95f30-ed84-4eef-b1c4-8b8474ab82a4.png)
 
-In order for this to work, some initial setup is required on the repository as explained below.
+For this to work, some initial setup is required on the repository as explained below.
 
 ## Setting up GitHub actions
 
-In order to deploy JavaScript clients using GitHub actions, we first need the following secret variables to be set up on the repository.
+To deploy JavaScript clients using GitHub actions, we first need the following secret variables to be set up on the repository.
 
-- `NPM_TOKEN` — An access token that can publish your packages to NPM.
+- `NPM_TOKEN` — An access token that can publish your packages to NPM.
 - `VERCEL_TOKEN` — An access token that can deploy to Vercel.
 - `VERCEL_ORG_ID` — The ID of the Vercel organization you want to deploy to.
 

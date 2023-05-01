@@ -1,10 +1,10 @@
 # Contributing to Mpl Project Name
 
-This is quick guide to help you contribute to Mpl Project Name.
+This is a quick guide to help you contribute to Mpl Project Name.
 
 ## Getting started
 
-The root folder has a private `package.json` containing a few scripts and JavaScript dependencies that help generate IDLs, clients and start a local validator. First, [ensure you have pnpm installed](https://pnpm.io/installation) and run the following command to install the dependencies.
+The root folder has a private `package.json` containing a few scripts and JavaScript dependencies that help generate IDLs; clients and start a local validator. First, [ensure you have pnpm installed](https://pnpm.io/installation) and run the following command to install the dependencies.
 
 ```sh
 pnpm install
@@ -32,4 +32,4 @@ Each client has its own README with instructions on how to get started. You can 
 
 Most of the CI/CD should already be set up for you and the `.github/.env` file can be used to tweak the variables of the workflows.
 
-However, the "Deploy JS Client" workflow — configured in `.github/workflows/deploy-js.yml` — requires a few more steps to works. See the [CONTRIBUTING.md file of the JavaScript client](./clients/js/CONTRIBUTING.md#setting-up-github-actions) for more information.
+However, the "Deploy JS Client" workflow — configured in `.github/workflows/deploy-js.yml` — requires a few more steps to work. See the [CONTRIBUTING.md file of the JavaScript client](./clients/js/CONTRIBUTING.md#setting-up-github-actions) for more information.
