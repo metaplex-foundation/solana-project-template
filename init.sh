@@ -4,9 +4,9 @@
 # public key with the provided values. Simply update the values
 # below, run "./init.sh" in your terminal and you're good to go!
 
-NAME="mpl-foo-name"
-DESCRIPTION="My foo description"
-PUBLIC_KEY="MyFoo1111111111111111111111111111111111"
+NAME="mpl-project-name"
+DESCRIPTION="My project description"
+PUBLIC_KEY="MyProgram1111111111111111111111111111111111"
 
 # ------------------------------------
 # --- Do not edit below this line. ---
@@ -56,7 +56,7 @@ find $ROOT_DIR \
   s/$OLD_DESCRIPTION/$DESCRIPTION/g; \
   s/$OLD_PUBLIC_KEY/$PUBLIC_KEY/g"
 
-# Update folder names
+# Update folder and file names
 mv "$ROOT_DIR/programs/$OLD_NAME" "$ROOT_DIR/programs/$NAME"
 mv "$ROOT_DIR/idls/$SNAKE_OLD_NAME.json" "$ROOT_DIR/idls/$SNAKE_NAME.json"
 mv "$ROOT_DIR/clients/js/src/generated/errors/$CAMEL_OLD_NAME.ts" "$ROOT_DIR/clients/js/src/generated/errors/$CAMEL_NAME.ts"
