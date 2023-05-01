@@ -57,9 +57,13 @@ find $ROOT_DIR \
   s/$OLD_PUBLIC_KEY/$PUBLIC_KEY/g"
 
 # Update folder names
-mv -T "$ROOT_DIR/programs/$OLD_NAME" "$ROOT_DIR/programs/$NAME"
+mv "$ROOT_DIR/programs/$OLD_NAME" "$ROOT_DIR/programs/$NAME"
 mv "$ROOT_DIR/idls/$SNAKE_OLD_NAME.json" "$ROOT_DIR/idls/$SNAKE_NAME.json"
 mv "$ROOT_DIR/clients/js/src/generated/errors/$CAMEL_OLD_NAME.ts" "$ROOT_DIR/clients/js/src/generated/errors/$CAMEL_NAME.ts"
 mv "$ROOT_DIR/clients/js/src/generated/programs/$CAMEL_OLD_NAME.ts" "$ROOT_DIR/clients/js/src/generated/programs/$CAMEL_NAME.ts"
 
-echo "Done!"
+echo "You're all set, build something cool! ✨"
+echo "This script will now self-destruct."
+
+# Self-destruct
+rm "$ROOT_DIR/init.sh"
