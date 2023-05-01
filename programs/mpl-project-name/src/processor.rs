@@ -1,6 +1,6 @@
 use crate::error::MplProjectNameError;
 use crate::instruction::{CreateMyAccountArgs, MplProjectNameInstruction};
-use crate::state::MyAccount;
+use crate::state::{Key, MyAccount, MyData};
 use borsh::BorshDeserialize;
 use solana_program::{
     account_info::{next_account_info, AccountInfo},
@@ -61,6 +61,16 @@ fn create_my_account(accounts: &[AccountInfo], args: CreateMyAccountArgs) -> Pro
         &[payer.clone(), address.clone(), system_program.clone()],
     )?;
 
-    // TODO: Assign the data.
+    let my_account = MyAccount {
+        key: Key::MyAccount,
+        authority: *authority.key,
+        data: MyData {
+            foo: args.foo,
+            bar: args.bar,
+        },
+    };
+
+    my_account.save(address);
+
     Ok(())
 }

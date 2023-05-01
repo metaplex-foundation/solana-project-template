@@ -4,10 +4,10 @@ use shank::ShankInstruction;
 #[repr(C)]
 #[derive(BorshSerialize, BorshDeserialize, PartialEq, Debug, Clone)]
 pub struct CreateMyAccountArgs {
-    /// My account version.
-    version: u8,
-    /// My account name.
-    name: String,
+    /// Some description for foo.
+    pub foo: u16,
+    /// Some description for bar.
+    pub bar: u32,
 }
 
 #[derive(Debug, Clone, ShankInstruction, BorshSerialize, BorshDeserialize)]
