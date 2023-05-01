@@ -29,7 +29,7 @@ impl MyAccount {
     pub fn save(&self, account: &AccountInfo) -> () {
         let mut bytes = Vec::with_capacity(account.data_len());
         self.serialize(&mut bytes).unwrap();
-        account.try_borrow_mut_data().unwrap().data[..bytes.len()].copy_from_slice(&bytes)
+        account.try_borrow_mut_data().unwrap()[..bytes.len()].copy_from_slice(&bytes)
     }
 }
 
