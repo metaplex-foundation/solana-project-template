@@ -3,7 +3,7 @@ use shank::ShankInstruction;
 
 #[repr(C)]
 #[derive(BorshSerialize, BorshDeserialize, PartialEq, Debug, Clone)]
-pub struct CreateMyAccountArgs {
+pub struct CreateArgs {
     /// Some description for foo.
     pub foo: u16,
     /// Some description for bar.
@@ -19,5 +19,5 @@ pub enum MplProjectNameInstruction {
     #[account(1, name="authority", desc = "The authority of the new account")]
     #[account(2, writable, signer, name="payer", desc = "The account paying for the storage fees")]
     #[account(3, name="system_program", desc = "The system program")]
-    CreateMyAccount(CreateMyAccountArgs),
+    Create(CreateArgs),
 }

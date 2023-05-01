@@ -1,5 +1,5 @@
 use crate::error::MplProjectNameError;
-use crate::instruction::{CreateMyAccountArgs, MplProjectNameInstruction};
+use crate::instruction::{CreateArgs, MplProjectNameInstruction};
 use crate::state::{Key, MyAccount, MyData};
 use borsh::BorshDeserialize;
 use solana_program::{
@@ -23,15 +23,15 @@ impl Processor {
         let instruction: MplProjectNameInstruction =
             MplProjectNameInstruction::try_from_slice(instruction_data)?;
         match instruction {
-            MplProjectNameInstruction::CreateMyAccount(args) => {
-                msg!("Instruction: CreateMyAccount");
-                create_my_account(accounts, args)
+            MplProjectNameInstruction::Create(args) => {
+                msg!("Instruction: Create");
+                create(accounts, args)
             }
         }
     }
 }
 
-fn create_my_account(accounts: &[AccountInfo], args: CreateMyAccountArgs) -> ProgramResult {
+fn create(accounts: &[AccountInfo], args: CreateArgs) -> ProgramResult {
     // Accounts.
     let account_info_iter = &mut accounts.iter();
     let address = next_account_info(account_info_iter)?;
