@@ -14,7 +14,11 @@ pub enum Key {
 pub struct MyAccount {
     key: Key,
     authority: Pubkey,
-    data: MyDefinedType,
+    data: MyData,
+}
+
+impl MyAccount {
+    pub const LEN: usize = 1 + 32 + MyData::LEN;
 }
 
 #[repr(C)]
@@ -25,7 +29,11 @@ pub struct MyPdaAccount {
 }
 
 #[derive(Clone, BorshSerialize, BorshDeserialize, Debug)]
-pub struct MyDefinedType {
-    thing: u8,
-    hash: [u8; 32],
+pub struct MyData {
+    version: u8,
+    name: String,
+}
+
+impl MyData {
+    pub const LEN: usize = 1 + 32;
 }

@@ -8,9 +8,9 @@ use thiserror::Error;
 
 #[derive(Error, Clone, Debug, Eq, PartialEq, FromPrimitive)]
 pub enum MplProjectNameError {
-    /// My error description
-    #[error("My error message")]
-    MyErrorName,
+    /// 0 - Invalid System Program
+    #[error("Invalid System Program")]
+    InvalidSystemProgram,
 }
 
 impl PrintProgramError for MplProjectNameError {
@@ -27,6 +27,6 @@ impl From<MplProjectNameError> for ProgramError {
 
 impl<T> DecodeError<T> for MplProjectNameError {
     fn type_of() -> &'static str {
-        "Error Thingy"
+        "Mpl Project Name Error"
     }
 }

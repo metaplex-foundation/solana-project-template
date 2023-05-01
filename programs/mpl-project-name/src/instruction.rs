@@ -4,17 +4,20 @@ use shank::ShankInstruction;
 #[repr(C)]
 #[derive(BorshSerialize, BorshDeserialize, PartialEq, Debug, Clone)]
 pub struct CreateMyAccountArgs {
-    value: u64,
+    /// My account version.
+    version: u8,
+    /// My account name.
+    name: String,
 }
 
 #[derive(Debug, Clone, ShankInstruction, BorshSerialize, BorshDeserialize)]
 #[rustfmt::skip]
 pub enum MplProjectNameInstruction {
-    /// Description of this instruction
-    #[account(0, writable, signer, name="signed_writable_account", desc="signed, writable account description")]
-    #[account(1, writable, name="writable_account", desc = "writable, non signed account description")]
-    #[account(2, name="non_writable_account", desc = "non signed, non writable account description")]
-    #[account(3, name="token_program", desc = "Token program")]
-    #[account(4, name="rent", desc = "Rent sysvar")]
+    /// Create My Account.
+    /// A detailed description of the instruction.
+    #[account(0, writable, signer, name="address", desc = "The address of the new account")]
+    #[account(1, name="authority", desc = "The authority of the new account")]
+    #[account(2, writable, signer, name="payer", desc = "The account paying for the storage fees")]
+    #[account(3, name="system_program", desc = "The system program")]
     CreateMyAccount(CreateMyAccountArgs),
 }
