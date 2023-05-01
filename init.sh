@@ -22,6 +22,10 @@ OLD_PUBLIC_KEY="MyProgram1111111111111111111111111111111111"
 SNAKE_NAME=$(echo "$NAME" | perl -pe 's/-/_/g')
 SNAKE_OLD_NAME=$(echo "$OLD_NAME" | perl -pe 's/-/_/g')
 
+# CAPITALIZED_SNAKE_CASE
+CAPITALIZED_SNAKE_NAME=$(echo "$SNAKE_NAME" | tr '[:lower:]' '[:upper:]')
+CAPITALIZED_SNAKE_OLD_NAME=$(echo "$SNAKE_OLD_NAME" | tr '[:lower:]' '[:upper:]')
+
 # camelCase
 CAMEL_NAME=$(echo "$NAME" | perl -pe 's/-(\w)/\U$1/g')
 CAMEL_OLD_NAME=$(echo "$OLD_NAME" | perl -pe 's/-(\w)/\U$1/g')
@@ -45,6 +49,7 @@ find $ROOT_DIR \
   -type f -print0 |
   xargs -0 perl -pi -e "s/$OLD_NAME/$NAME/g; \
   s/$SNAKE_OLD_NAME/$SNAKE_NAME/g; \
+  s/$CAPITALIZED_SNAKE_OLD_NAME/$CAPITALIZED_SNAKE_NAME/g; \
   s/$CAMEL_OLD_NAME/$CAMEL_NAME/g; \
   s/$PASCAL_OLD_NAME/$PASCAL_NAME/g; \
   s/$TITLE_OLD_NAME/$TITLE_NAME/g; \
@@ -52,6 +57,9 @@ find $ROOT_DIR \
   s/$OLD_PUBLIC_KEY/$PUBLIC_KEY/g"
 
 # Update folder names
-# mv "$ROOT_DIR"/packages/sdk/src/"$OLD_NAME_TS".ts "$ROOT_DIR"/packages/sdk/src/"$NEW_NAME_TS".ts
-# mv "$ROOT_DIR"/packages/sdk/idl/"$OLD_NAME".json "$ROOT_DIR"/packages/sdk/idl/"$NEW_NAME".json
-# echo "Renamed the default files!"
+mv -T "$ROOT_DIR/programs/$OLD_NAME" "$ROOT_DIR/programs/$NAME"
+mv "$ROOT_DIR/idls/$SNAKE_OLD_NAME.json" "$ROOT_DIR/idls/$SNAKE_NAME.json"
+mv "$ROOT_DIR/clients/js/src/generated/errors/$CAMEL_OLD_NAME.ts" "$ROOT_DIR/clients/js/src/generated/errors/$CAMEL_NAME.ts"
+mv "$ROOT_DIR/clients/js/src/generated/programs/$CAMEL_OLD_NAME.ts" "$ROOT_DIR/clients/js/src/generated/programs/$CAMEL_NAME.ts"
+
+echo "Done!"
