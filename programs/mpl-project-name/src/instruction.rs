@@ -1,6 +1,4 @@
 use borsh::{BorshDeserialize, BorshSerialize};
-use borsh::{BorshDeserialize, BorshSerialize};
-use shank::ShankInstruction;
 use shank::ShankInstruction;
 use solana_program::{
     instruction::{AccountMeta, Instruction},
