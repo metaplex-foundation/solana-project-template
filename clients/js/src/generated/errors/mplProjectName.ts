@@ -28,6 +28,32 @@ export class InvalidSystemProgramError extends ProgramError {
 codeToErrorMap.set(0x0, InvalidSystemProgramError);
 nameToErrorMap.set('InvalidSystemProgram', InvalidSystemProgramError);
 
+/** DeserializationError: Error deserializing account */
+export class DeserializationErrorError extends ProgramError {
+  readonly name: string = 'DeserializationError';
+
+  readonly code: number = 0x1; // 1
+
+  constructor(program: Program, cause?: Error) {
+    super('Error deserializing account', program, cause);
+  }
+}
+codeToErrorMap.set(0x1, DeserializationErrorError);
+nameToErrorMap.set('DeserializationError', DeserializationErrorError);
+
+/** SerializationError: Error serializing account */
+export class SerializationErrorError extends ProgramError {
+  readonly name: string = 'SerializationError';
+
+  readonly code: number = 0x2; // 2
+
+  constructor(program: Program, cause?: Error) {
+    super('Error serializing account', program, cause);
+  }
+}
+codeToErrorMap.set(0x2, SerializationErrorError);
+nameToErrorMap.set('SerializationError', SerializationErrorError);
+
 /**
  * Attempts to resolve a custom program error from the provided error code.
  * @category Errors

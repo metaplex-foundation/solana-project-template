@@ -1,7 +1,12 @@
 use borsh::{BorshDeserialize, BorshSerialize};
 use shank::ShankAccount;
 use solana_program::account_info::AccountInfo;
+use solana_program::entrypoint::ProgramResult;
+use solana_program::msg;
+use solana_program::program_error::ProgramError;
 use solana_program::pubkey::Pubkey;
+
+use crate::error::MplProjectNameError;
 
 #[derive(Clone, BorshSerialize, BorshDeserialize, Debug)]
 pub enum Key {
@@ -21,15 +26,22 @@ pub struct MyAccount {
 impl MyAccount {
     pub const LEN: usize = 1 + 32 + MyData::LEN;
 
-    pub fn load(account: &AccountInfo) -> Self {
+    pub fn load(account: &AccountInfo) -> Result<Self, ProgramError> {
         let mut bytes: &[u8] = &(*account.data).borrow();
-        MyAccount::deserialize(&mut bytes).unwrap()
+        MyAccount::deserialize(&mut bytes).map_err(|error| {
+            msg!("Error: {}", error);
+            MplProjectNameError::DeserializationError.into()
+        })
     }
 
-    pub fn save(&self, account: &AccountInfo) {
+    pub fn save(&self, account: &AccountInfo) -> ProgramResult {
         let mut bytes = Vec::with_capacity(account.data_len());
-        self.serialize(&mut bytes).unwrap();
-        account.try_borrow_mut_data().unwrap()[..bytes.len()].copy_from_slice(&bytes)
+        self.serialize(&mut bytes).map_err(|error| {
+            msg!("Error: {}", error);
+            MplProjectNameError::SerializationError
+        })?;
+        account.try_borrow_mut_data().unwrap()[..bytes.len()].copy_from_slice(&bytes);
+        Ok(())
     }
 }
 

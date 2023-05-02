@@ -6,7 +6,7 @@ use solana_program::{
 };
 
 #[repr(C)]
-#[derive(BorshSerialize, BorshDeserialize, PartialEq, Debug, Clone)]
+#[derive(BorshSerialize, BorshDeserialize, PartialEq, Eq, Debug, Clone)]
 pub struct CreateArgs {
     /// Some description for foo.
     pub foo: u16,
