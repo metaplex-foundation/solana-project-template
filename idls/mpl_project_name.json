@@ -144,6 +144,16 @@
       "code": 0,
       "name": "InvalidSystemProgram",
       "msg": "Invalid System Program"
+    },
+    {
+      "code": 1,
+      "name": "DeserializationError",
+      "msg": "Error deserializing account"
+    },
+    {
+      "code": 2,
+      "name": "SerializationError",
+      "msg": "Error serializing account"
     }
   ],
   "metadata": {

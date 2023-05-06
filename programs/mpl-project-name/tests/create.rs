@@ -1,5 +1,6 @@
 #![cfg(feature = "test-bpf")]
 
+use borsh::BorshDeserialize;
 use mpl_project_name::{instruction::CreateArgs, state::MyAccount};
 use solana_program_test::{tokio, ProgramTest};
 use solana_sdk::{
@@ -38,5 +39,12 @@ async fn create() {
         .unwrap();
 
     assert!(account.is_some());
-    assert_eq!(account.unwrap().data.len(), MyAccount::LEN);
+
+    let account = account.unwrap();
+    assert_eq!(account.data.len(), MyAccount::LEN);
+
+    let mut account_data = account.data.as_ref();
+    let my_account = MyAccount::deserialize(&mut account_data).unwrap();
+    assert_eq!(my_account.data.foo, 1);
+    assert_eq!(my_account.data.bar, 2);
 }

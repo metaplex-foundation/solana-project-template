@@ -70,7 +70,5 @@ fn create(accounts: &[AccountInfo], args: CreateArgs) -> ProgramResult {
         },
     };
 
-    my_account.save(address);
-
-    Ok(())
+    my_account.save(address)
 }
