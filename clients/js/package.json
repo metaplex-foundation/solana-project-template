@@ -25,7 +25,7 @@
   "author": "Metaplex Maintainers <contact@metaplex.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "@metaplex-foundation/mpl-essentials": "^0.5.8"
+    "@metaplex-foundation/mpl-toolbox": "^0.6.1"
   },
   "peerDependencies": {
     "@metaplex-foundation/umi": "0.6 - 0.7"
