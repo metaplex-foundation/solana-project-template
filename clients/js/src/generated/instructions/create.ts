@@ -10,6 +10,7 @@ import {
   ACCOUNT_HEADER_SIZE,
   AccountMeta,
   Context,
+  Pda,
   PublicKey,
   Serializer,
   Signer,
@@ -18,18 +19,18 @@ import {
   transactionBuilder,
 } from '@metaplex-foundation/umi';
 import { getMyAccountSize } from '../accounts';
-import { addObjectProperty, isWritable } from '../shared';
+import { addAccountMeta, addObjectProperty } from '../shared';
 
 // Accounts.
 export type CreateInstructionAccounts = {
   /** The address of the new account */
   address: Signer;
   /** The authority of the new account */
-  authority?: PublicKey;
+  authority?: PublicKey | Pda;
   /** The account paying for the storage fees */
   payer?: Signer;
   /** The system program */
-  systemProgram?: PublicKey;
+  systemProgram?: PublicKey | Pda;
 };
 
 // Data.
@@ -70,66 +71,49 @@ export function create(
   const keys: AccountMeta[] = [];
 
   // Program ID.
-  const programId = {
-    ...context.programs.getPublicKey(
-      'mplProjectName',
-      'MyProgram1111111111111111111111111111111111'
-    ),
-    isWritable: false,
-  };
+  const programId = context.programs.getPublicKey(
+    'mplProjectName',
+    'MyProgram1111111111111111111111111111111111'
+  );
 
   // Resolved inputs.
-  const resolvingAccounts = {};
+  const resolvedAccounts = {
+    address: [input.address, true] as const,
+  };
   const resolvingArgs = {};
   addObjectProperty(
-    resolvingAccounts,
+    resolvedAccounts,
     'authority',
-    input.authority ?? context.identity.publicKey
+    input.authority
+      ? ([input.authority, false] as const)
+      : ([context.identity.publicKey, false] as const)
   );
-  addObjectProperty(resolvingAccounts, 'payer', input.payer ?? context.payer);
   addObjectProperty(
-    resolvingAccounts,
-    'systemProgram',
-    input.systemProgram ?? {
-      ...context.programs.getPublicKey(
-        'splSystem',
-        '11111111111111111111111111111111'
-      ),
-      isWritable: false,
-    }
+    resolvedAccounts,
+    'payer',
+    input.payer
+      ? ([input.payer, true] as const)
+      : ([context.payer, true] as const)
   );
-  const resolvedAccounts = { ...input, ...resolvingAccounts };
+  addObjectProperty(
+    resolvedAccounts,
+    'systemProgram',
+    input.systemProgram
+      ? ([input.systemProgram, false] as const)
+      : ([
+          context.programs.getPublicKey(
+            'splSystem',
+            '11111111111111111111111111111111'
+          ),
+          false,
+        ] as const)
+  );
   const resolvedArgs = { ...input, ...resolvingArgs };
 
-  // Address.
-  signers.push(resolvedAccounts.address);
-  keys.push({
-    pubkey: resolvedAccounts.address.publicKey,
-    isSigner: true,
-    isWritable: isWritable(resolvedAccounts.address, true),
-  });
-
-  // Authority.
-  keys.push({
-    pubkey: resolvedAccounts.authority,
-    isSigner: false,
-    isWritable: isWritable(resolvedAccounts.authority, false),
-  });
-
-  // Payer.
-  signers.push(resolvedAccounts.payer);
-  keys.push({
-    pubkey: resolvedAccounts.payer.publicKey,
-    isSigner: true,
-    isWritable: isWritable(resolvedAccounts.payer, true),
-  });
-
-  // System Program.
-  keys.push({
-    pubkey: resolvedAccounts.systemProgram,
-    isSigner: false,
-    isWritable: isWritable(resolvedAccounts.systemProgram, false),
-  });
+  addAccountMeta(keys, signers, resolvedAccounts.address, false);
+  addAccountMeta(keys, signers, resolvedAccounts.authority, false);
+  addAccountMeta(keys, signers, resolvedAccounts.payer, false);
+  addAccountMeta(keys, signers, resolvedAccounts.systemProgram, false);
 
   // Data.
   const data =

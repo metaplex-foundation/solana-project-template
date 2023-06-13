@@ -1,4 +1,4 @@
-import { generateSigner, publicKey } from '@metaplex-foundation/umi';
+import { generateSigner } from '@metaplex-foundation/umi';
 import test from 'ava';
 import { MyAccount, create, fetchMyAccount } from '../src';
 import { createUmi } from './_setup';
@@ -13,8 +13,8 @@ test('it can create new accounts', async (t) => {
 
   // Then an account was created with the correct data.
   t.like(await fetchMyAccount(umi, address.publicKey), <MyAccount>{
-    publicKey: publicKey(address),
-    authority: publicKey(umi.identity),
+    publicKey: address.publicKey,
+    authority: umi.identity.publicKey,
     data: { foo: 1, bar: 2 },
   });
 });

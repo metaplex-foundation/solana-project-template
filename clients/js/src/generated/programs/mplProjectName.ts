@@ -11,16 +11,14 @@ import {
   Context,
   Program,
   PublicKey,
-  publicKey,
 } from '@metaplex-foundation/umi';
 import {
   getMplProjectNameErrorFromCode,
   getMplProjectNameErrorFromName,
 } from '../errors';
 
-export const MPL_PROJECT_NAME_PROGRAM_ID = publicKey(
-  'MyProgram1111111111111111111111111111111111'
-);
+export const MPL_PROJECT_NAME_PROGRAM_ID =
+  'MyProgram1111111111111111111111111111111111' as PublicKey<'MyProgram1111111111111111111111111111111111'>;
 
 export function createMplProjectNameProgram(): Program {
   return {
