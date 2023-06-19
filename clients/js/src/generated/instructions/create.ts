@@ -12,12 +12,18 @@ import {
   Context,
   Pda,
   PublicKey,
-  Serializer,
   Signer,
   TransactionBuilder,
-  mapSerializer,
   transactionBuilder,
 } from '@metaplex-foundation/umi';
+import {
+  Serializer,
+  mapSerializer,
+  struct,
+  u16,
+  u32,
+  u8,
+} from '@metaplex-foundation/umi/serializers';
 import { getMyAccountSize } from '../accounts';
 import { addAccountMeta, addObjectProperty } from '../shared';
 
@@ -42,16 +48,23 @@ export type CreateInstructionData = {
 
 export type CreateInstructionDataArgs = { foo: number; bar: number };
 
+/** @deprecated Use `getCreateInstructionDataSerializer()` without any argument instead. */
 export function getCreateInstructionDataSerializer(
-  context: Pick<Context, 'serializer'>
+  _context: object
+): Serializer<CreateInstructionDataArgs, CreateInstructionData>;
+export function getCreateInstructionDataSerializer(): Serializer<
+  CreateInstructionDataArgs,
+  CreateInstructionData
+>;
+export function getCreateInstructionDataSerializer(
+  _context: object = {}
 ): Serializer<CreateInstructionDataArgs, CreateInstructionData> {
-  const s = context.serializer;
   return mapSerializer<CreateInstructionDataArgs, any, CreateInstructionData>(
-    s.struct<CreateInstructionData>(
+    struct<CreateInstructionData>(
       [
-        ['discriminator', s.u8()],
-        ['foo', s.u16()],
-        ['bar', s.u32()],
+        ['discriminator', u8()],
+        ['foo', u16()],
+        ['bar', u32()],
       ],
       { description: 'CreateInstructionData' }
     ),
@@ -64,7 +77,7 @@ export type CreateInstructionArgs = CreateInstructionDataArgs;
 
 // Instruction.
 export function create(
-  context: Pick<Context, 'serializer' | 'programs' | 'identity' | 'payer'>,
+  context: Pick<Context, 'programs' | 'identity' | 'payer'>,
   input: CreateInstructionAccounts & CreateInstructionArgs
 ): TransactionBuilder {
   const signers: Signer[] = [];
@@ -116,8 +129,7 @@ export function create(
   addAccountMeta(keys, signers, resolvedAccounts.systemProgram, false);
 
   // Data.
-  const data =
-    getCreateInstructionDataSerializer(context).serialize(resolvedArgs);
+  const data = getCreateInstructionDataSerializer().serialize(resolvedArgs);
 
   // Bytes Created On Chain.
   const bytesCreatedOnChain = getMyAccountSize() + ACCOUNT_HEADER_SIZE;

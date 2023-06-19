@@ -14,13 +14,17 @@ import {
   RpcAccount,
   RpcGetAccountOptions,
   RpcGetAccountsOptions,
-  Serializer,
   assertAccountExists,
   deserializeAccount,
   gpaBuilder,
-  mapSerializer,
   publicKey as toPublicKey,
 } from '@metaplex-foundation/umi';
+import {
+  Serializer,
+  mapSerializer,
+  publicKey as publicKeySerializer,
+  struct,
+} from '@metaplex-foundation/umi/serializers';
 import {
   Key,
   KeyArgs,
@@ -43,16 +47,23 @@ export type MyAccountAccountDataArgs = {
   data: MyDataArgs;
 };
 
+/** @deprecated Use `getMyAccountAccountDataSerializer()` without any argument instead. */
 export function getMyAccountAccountDataSerializer(
-  context: Pick<Context, 'serializer'>
+  _context: object
+): Serializer<MyAccountAccountDataArgs, MyAccountAccountData>;
+export function getMyAccountAccountDataSerializer(): Serializer<
+  MyAccountAccountDataArgs,
+  MyAccountAccountData
+>;
+export function getMyAccountAccountDataSerializer(
+  _context: object = {}
 ): Serializer<MyAccountAccountDataArgs, MyAccountAccountData> {
-  const s = context.serializer;
   return mapSerializer<MyAccountAccountDataArgs, any, MyAccountAccountData>(
-    s.struct<MyAccountAccountData>(
+    struct<MyAccountAccountData>(
       [
-        ['key', getKeySerializer(context)],
-        ['authority', s.publicKey()],
-        ['data', getMyDataSerializer(context)],
+        ['key', getKeySerializer()],
+        ['authority', publicKeySerializer()],
+        ['data', getMyDataSerializer()],
       ],
       { description: 'MyAccountAccountData' }
     ),
@@ -60,18 +71,24 @@ export function getMyAccountAccountDataSerializer(
   ) as Serializer<MyAccountAccountDataArgs, MyAccountAccountData>;
 }
 
+/** @deprecated Use `deserializeMyAccount(rawAccount)` without any context instead. */
 export function deserializeMyAccount(
-  context: Pick<Context, 'serializer'>,
+  context: object,
   rawAccount: RpcAccount
+): MyAccount;
+export function deserializeMyAccount(rawAccount: RpcAccount): MyAccount;
+export function deserializeMyAccount(
+  context: RpcAccount | object,
+  rawAccount?: RpcAccount
 ): MyAccount {
   return deserializeAccount(
-    rawAccount,
-    getMyAccountAccountDataSerializer(context)
+    rawAccount ?? (context as RpcAccount),
+    getMyAccountAccountDataSerializer()
   );
 }
 
 export async function fetchMyAccount(
-  context: Pick<Context, 'rpc' | 'serializer'>,
+  context: Pick<Context, 'rpc'>,
   publicKey: PublicKey | Pda,
   options?: RpcGetAccountOptions
 ): Promise<MyAccount> {
@@ -80,11 +97,11 @@ export async function fetchMyAccount(
     options
   );
   assertAccountExists(maybeAccount, 'MyAccount');
-  return deserializeMyAccount(context, maybeAccount);
+  return deserializeMyAccount(maybeAccount);
 }
 
 export async function safeFetchMyAccount(
-  context: Pick<Context, 'rpc' | 'serializer'>,
+  context: Pick<Context, 'rpc'>,
   publicKey: PublicKey | Pda,
   options?: RpcGetAccountOptions
 ): Promise<MyAccount | null> {
@@ -92,13 +109,11 @@ export async function safeFetchMyAccount(
     toPublicKey(publicKey, false),
     options
   );
-  return maybeAccount.exists
-    ? deserializeMyAccount(context, maybeAccount)
-    : null;
+  return maybeAccount.exists ? deserializeMyAccount(maybeAccount) : null;
 }
 
 export async function fetchAllMyAccount(
-  context: Pick<Context, 'rpc' | 'serializer'>,
+  context: Pick<Context, 'rpc'>,
   publicKeys: Array<PublicKey | Pda>,
   options?: RpcGetAccountsOptions
 ): Promise<MyAccount[]> {
@@ -108,12 +123,12 @@ export async function fetchAllMyAccount(
   );
   return maybeAccounts.map((maybeAccount) => {
     assertAccountExists(maybeAccount, 'MyAccount');
-    return deserializeMyAccount(context, maybeAccount);
+    return deserializeMyAccount(maybeAccount);
   });
 }
 
 export async function safeFetchAllMyAccount(
-  context: Pick<Context, 'rpc' | 'serializer'>,
+  context: Pick<Context, 'rpc'>,
   publicKeys: Array<PublicKey | Pda>,
   options?: RpcGetAccountsOptions
 ): Promise<MyAccount[]> {
@@ -123,28 +138,23 @@ export async function safeFetchAllMyAccount(
   );
   return maybeAccounts
     .filter((maybeAccount) => maybeAccount.exists)
-    .map((maybeAccount) =>
-      deserializeMyAccount(context, maybeAccount as RpcAccount)
-    );
+    .map((maybeAccount) => deserializeMyAccount(maybeAccount as RpcAccount));
 }
 
 export function getMyAccountGpaBuilder(
-  context: Pick<Context, 'rpc' | 'serializer' | 'programs'>
+  context: Pick<Context, 'rpc' | 'programs'>
 ) {
-  const s = context.serializer;
   const programId = context.programs.getPublicKey(
     'mplProjectName',
     'MyProgram1111111111111111111111111111111111'
   );
   return gpaBuilder(context, programId)
     .registerFields<{ key: KeyArgs; authority: PublicKey; data: MyDataArgs }>({
-      key: [0, getKeySerializer(context)],
-      authority: [1, s.publicKey()],
-      data: [33, getMyDataSerializer(context)],
+      key: [0, getKeySerializer()],
+      authority: [1, publicKeySerializer()],
+      data: [33, getMyDataSerializer()],
     })
-    .deserializeUsing<MyAccount>((account) =>
-      deserializeMyAccount(context, account)
-    )
+    .deserializeUsing<MyAccount>((account) => deserializeMyAccount(account))
     .whereField('key', Key.MyAccount);
 }
 

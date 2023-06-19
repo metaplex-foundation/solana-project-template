@@ -14,13 +14,19 @@ import {
   RpcAccount,
   RpcGetAccountOptions,
   RpcGetAccountsOptions,
-  Serializer,
   assertAccountExists,
   deserializeAccount,
   gpaBuilder,
-  mapSerializer,
   publicKey as toPublicKey,
 } from '@metaplex-foundation/umi';
+import {
+  Serializer,
+  mapSerializer,
+  publicKey as publicKeySerializer,
+  string,
+  struct,
+  u8,
+} from '@metaplex-foundation/umi/serializers';
 import { Key, KeyArgs, getKeySerializer } from '../types';
 
 export type MyPdaAccount = Account<MyPdaAccountAccountData>;
@@ -29,19 +35,26 @@ export type MyPdaAccountAccountData = { key: Key; bump: number };
 
 export type MyPdaAccountAccountDataArgs = { bump: number };
 
+/** @deprecated Use `getMyPdaAccountAccountDataSerializer()` without any argument instead. */
 export function getMyPdaAccountAccountDataSerializer(
-  context: Pick<Context, 'serializer'>
+  _context: object
+): Serializer<MyPdaAccountAccountDataArgs, MyPdaAccountAccountData>;
+export function getMyPdaAccountAccountDataSerializer(): Serializer<
+  MyPdaAccountAccountDataArgs,
+  MyPdaAccountAccountData
+>;
+export function getMyPdaAccountAccountDataSerializer(
+  _context: object = {}
 ): Serializer<MyPdaAccountAccountDataArgs, MyPdaAccountAccountData> {
-  const s = context.serializer;
   return mapSerializer<
     MyPdaAccountAccountDataArgs,
     any,
     MyPdaAccountAccountData
   >(
-    s.struct<MyPdaAccountAccountData>(
+    struct<MyPdaAccountAccountData>(
       [
-        ['key', getKeySerializer(context)],
-        ['bump', s.u8()],
+        ['key', getKeySerializer()],
+        ['bump', u8()],
       ],
       { description: 'MyPdaAccountAccountData' }
     ),
@@ -49,18 +62,24 @@ export function getMyPdaAccountAccountDataSerializer(
   ) as Serializer<MyPdaAccountAccountDataArgs, MyPdaAccountAccountData>;
 }
 
+/** @deprecated Use `deserializeMyPdaAccount(rawAccount)` without any context instead. */
 export function deserializeMyPdaAccount(
-  context: Pick<Context, 'serializer'>,
+  context: object,
   rawAccount: RpcAccount
+): MyPdaAccount;
+export function deserializeMyPdaAccount(rawAccount: RpcAccount): MyPdaAccount;
+export function deserializeMyPdaAccount(
+  context: RpcAccount | object,
+  rawAccount?: RpcAccount
 ): MyPdaAccount {
   return deserializeAccount(
-    rawAccount,
-    getMyPdaAccountAccountDataSerializer(context)
+    rawAccount ?? (context as RpcAccount),
+    getMyPdaAccountAccountDataSerializer()
   );
 }
 
 export async function fetchMyPdaAccount(
-  context: Pick<Context, 'rpc' | 'serializer'>,
+  context: Pick<Context, 'rpc'>,
   publicKey: PublicKey | Pda,
   options?: RpcGetAccountOptions
 ): Promise<MyPdaAccount> {
@@ -69,11 +88,11 @@ export async function fetchMyPdaAccount(
     options
   );
   assertAccountExists(maybeAccount, 'MyPdaAccount');
-  return deserializeMyPdaAccount(context, maybeAccount);
+  return deserializeMyPdaAccount(maybeAccount);
 }
 
 export async function safeFetchMyPdaAccount(
-  context: Pick<Context, 'rpc' | 'serializer'>,
+  context: Pick<Context, 'rpc'>,
   publicKey: PublicKey | Pda,
   options?: RpcGetAccountOptions
 ): Promise<MyPdaAccount | null> {
@@ -81,13 +100,11 @@ export async function safeFetchMyPdaAccount(
     toPublicKey(publicKey, false),
     options
   );
-  return maybeAccount.exists
-    ? deserializeMyPdaAccount(context, maybeAccount)
-    : null;
+  return maybeAccount.exists ? deserializeMyPdaAccount(maybeAccount) : null;
 }
 
 export async function fetchAllMyPdaAccount(
-  context: Pick<Context, 'rpc' | 'serializer'>,
+  context: Pick<Context, 'rpc'>,
   publicKeys: Array<PublicKey | Pda>,
   options?: RpcGetAccountsOptions
 ): Promise<MyPdaAccount[]> {
@@ -97,12 +114,12 @@ export async function fetchAllMyPdaAccount(
   );
   return maybeAccounts.map((maybeAccount) => {
     assertAccountExists(maybeAccount, 'MyPdaAccount');
-    return deserializeMyPdaAccount(context, maybeAccount);
+    return deserializeMyPdaAccount(maybeAccount);
   });
 }
 
 export async function safeFetchAllMyPdaAccount(
-  context: Pick<Context, 'rpc' | 'serializer'>,
+  context: Pick<Context, 'rpc'>,
   publicKeys: Array<PublicKey | Pda>,
   options?: RpcGetAccountsOptions
 ): Promise<MyPdaAccount[]> {
@@ -112,26 +129,23 @@ export async function safeFetchAllMyPdaAccount(
   );
   return maybeAccounts
     .filter((maybeAccount) => maybeAccount.exists)
-    .map((maybeAccount) =>
-      deserializeMyPdaAccount(context, maybeAccount as RpcAccount)
-    );
+    .map((maybeAccount) => deserializeMyPdaAccount(maybeAccount as RpcAccount));
 }
 
 export function getMyPdaAccountGpaBuilder(
-  context: Pick<Context, 'rpc' | 'serializer' | 'programs'>
+  context: Pick<Context, 'rpc' | 'programs'>
 ) {
-  const s = context.serializer;
   const programId = context.programs.getPublicKey(
     'mplProjectName',
     'MyProgram1111111111111111111111111111111111'
   );
   return gpaBuilder(context, programId)
     .registerFields<{ key: KeyArgs; bump: number }>({
-      key: [0, getKeySerializer(context)],
-      bump: [1, s.u8()],
+      key: [0, getKeySerializer()],
+      bump: [1, u8()],
     })
     .deserializeUsing<MyPdaAccount>((account) =>
-      deserializeMyPdaAccount(context, account)
+      deserializeMyPdaAccount(account)
     )
     .whereField('key', Key.MyPdaAccount);
 }
@@ -141,7 +155,7 @@ export function getMyPdaAccountSize(): number {
 }
 
 export function findMyPdaAccountPda(
-  context: Pick<Context, 'eddsa' | 'programs' | 'serializer'>,
+  context: Pick<Context, 'eddsa' | 'programs'>,
   seeds: {
     /** The address of the authority */
     authority: PublicKey;
@@ -149,21 +163,20 @@ export function findMyPdaAccountPda(
     name: string;
   }
 ): Pda {
-  const s = context.serializer;
   const programId = context.programs.getPublicKey(
     'mplProjectName',
     'MyProgram1111111111111111111111111111111111'
   );
   return context.eddsa.findPda(programId, [
-    s.string({ size: 'variable' }).serialize('myPdaAccount'),
-    s.publicKey().serialize(programId),
-    s.publicKey().serialize(seeds.authority),
-    s.string({ size: 'variable' }).serialize(seeds.name),
+    string({ size: 'variable' }).serialize('myPdaAccount'),
+    publicKeySerializer().serialize(programId),
+    publicKeySerializer().serialize(seeds.authority),
+    string({ size: 'variable' }).serialize(seeds.name),
   ]);
 }
 
 export async function fetchMyPdaAccountFromSeeds(
-  context: Pick<Context, 'eddsa' | 'programs' | 'rpc' | 'serializer'>,
+  context: Pick<Context, 'eddsa' | 'programs' | 'rpc'>,
   seeds: Parameters<typeof findMyPdaAccountPda>[1],
   options?: RpcGetAccountOptions
 ): Promise<MyPdaAccount> {
@@ -175,7 +188,7 @@ export async function fetchMyPdaAccountFromSeeds(
 }
 
 export async function safeFetchMyPdaAccountFromSeeds(
-  context: Pick<Context, 'eddsa' | 'programs' | 'rpc' | 'serializer'>,
+  context: Pick<Context, 'eddsa' | 'programs' | 'rpc'>,
   seeds: Parameters<typeof findMyPdaAccountPda>[1],
   options?: RpcGetAccountOptions
 ): Promise<MyPdaAccount | null> {

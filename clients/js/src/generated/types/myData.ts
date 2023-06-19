@@ -6,20 +6,29 @@
  * @see https://github.com/metaplex-foundation/kinobi
  */
 
-import { Context, Serializer } from '@metaplex-foundation/umi';
+import {
+  Serializer,
+  struct,
+  u16,
+  u32,
+} from '@metaplex-foundation/umi/serializers';
 
 export type MyData = { foo: number; bar: number };
 
 export type MyDataArgs = MyData;
 
+/** @deprecated Use `getMyDataSerializer()` without any argument instead. */
 export function getMyDataSerializer(
-  context: Pick<Context, 'serializer'>
+  _context: object
+): Serializer<MyDataArgs, MyData>;
+export function getMyDataSerializer(): Serializer<MyDataArgs, MyData>;
+export function getMyDataSerializer(
+  _context: object = {}
 ): Serializer<MyDataArgs, MyData> {
-  const s = context.serializer;
-  return s.struct<MyData>(
+  return struct<MyData>(
     [
-      ['foo', s.u16()],
-      ['bar', s.u32()],
+      ['foo', u16()],
+      ['bar', u32()],
     ],
     { description: 'MyData' }
   ) as Serializer<MyDataArgs, MyData>;
