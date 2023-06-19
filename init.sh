@@ -44,7 +44,6 @@ find $ROOT_DIR \
   \( -type d -name node_modules -prune \) -o \
   \( -type d -name dist -prune \) -o \
   \( -type d -name .crates -prune \) -o \
-  ! -name 'README.md' \
   ! -name '*.sh' \
   -type f -print0 |
   xargs -0 perl -pi -e "s/$OLD_NAME/$NAME/g; \
