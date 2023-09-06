@@ -12,13 +12,13 @@ pnpm install
 
 You will then have access to the following commands.
 
+- `programs:build` - Build all programs and fetch all dependant programs.
+- `programs:test` - Test all programs.
+- `programs:clean` - Clean all built and fetched programs.
 - `pnpm generate:idls` - Generate IDLs for all programs, as configured in the `configs/shank.cjs` file.
 - `pnpm generate:clients` - Generate clients using Kinobi, as configured in the `configs/kinobi.cjs` file.
 - `pnpm generate` - Shortcut for `pnpm generate:idls && pnpm generate:clients`.
 - `pnpm validator` - Start a local validator using Amman, as configured in the `configs/validator.cjs` file.
-- `pnpm validator:localnet` - Same as `pnpm validator`.
-- `pnpm validator:devnet` - Start a local validator using the `configs/validator.devnet.cjs` file.
-- `pnpm validator:mainnet` - Start a local validator using the `configs/validator.mainnet.cjs` file.
 - `pnpm validator:stop` - Stop the local validator.
 - `pnpm validator:logs` - Show the logs of the local validator.
 
