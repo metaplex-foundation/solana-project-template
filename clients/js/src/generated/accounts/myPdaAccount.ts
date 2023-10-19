@@ -35,17 +35,10 @@ export type MyPdaAccountAccountData = { key: Key; bump: number };
 
 export type MyPdaAccountAccountDataArgs = { bump: number };
 
-/** @deprecated Use `getMyPdaAccountAccountDataSerializer()` without any argument instead. */
-export function getMyPdaAccountAccountDataSerializer(
-  _context: object
-): Serializer<MyPdaAccountAccountDataArgs, MyPdaAccountAccountData>;
 export function getMyPdaAccountAccountDataSerializer(): Serializer<
   MyPdaAccountAccountDataArgs,
   MyPdaAccountAccountData
->;
-export function getMyPdaAccountAccountDataSerializer(
-  _context: object = {}
-): Serializer<MyPdaAccountAccountDataArgs, MyPdaAccountAccountData> {
+> {
   return mapSerializer<
     MyPdaAccountAccountDataArgs,
     any,
@@ -62,20 +55,8 @@ export function getMyPdaAccountAccountDataSerializer(
   ) as Serializer<MyPdaAccountAccountDataArgs, MyPdaAccountAccountData>;
 }
 
-/** @deprecated Use `deserializeMyPdaAccount(rawAccount)` without any context instead. */
-export function deserializeMyPdaAccount(
-  context: object,
-  rawAccount: RpcAccount
-): MyPdaAccount;
-export function deserializeMyPdaAccount(rawAccount: RpcAccount): MyPdaAccount;
-export function deserializeMyPdaAccount(
-  context: RpcAccount | object,
-  rawAccount?: RpcAccount
-): MyPdaAccount {
-  return deserializeAccount(
-    rawAccount ?? (context as RpcAccount),
-    getMyPdaAccountAccountDataSerializer()
-  );
+export function deserializeMyPdaAccount(rawAccount: RpcAccount): MyPdaAccount {
+  return deserializeAccount(rawAccount, getMyPdaAccountAccountDataSerializer());
 }
 
 export async function fetchMyPdaAccount(

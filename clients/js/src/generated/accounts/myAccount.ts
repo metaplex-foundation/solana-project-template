@@ -47,17 +47,10 @@ export type MyAccountAccountDataArgs = {
   data: MyDataArgs;
 };
 
-/** @deprecated Use `getMyAccountAccountDataSerializer()` without any argument instead. */
-export function getMyAccountAccountDataSerializer(
-  _context: object
-): Serializer<MyAccountAccountDataArgs, MyAccountAccountData>;
 export function getMyAccountAccountDataSerializer(): Serializer<
   MyAccountAccountDataArgs,
   MyAccountAccountData
->;
-export function getMyAccountAccountDataSerializer(
-  _context: object = {}
-): Serializer<MyAccountAccountDataArgs, MyAccountAccountData> {
+> {
   return mapSerializer<MyAccountAccountDataArgs, any, MyAccountAccountData>(
     struct<MyAccountAccountData>(
       [
@@ -71,20 +64,8 @@ export function getMyAccountAccountDataSerializer(
   ) as Serializer<MyAccountAccountDataArgs, MyAccountAccountData>;
 }
 
-/** @deprecated Use `deserializeMyAccount(rawAccount)` without any context instead. */
-export function deserializeMyAccount(
-  context: object,
-  rawAccount: RpcAccount
-): MyAccount;
-export function deserializeMyAccount(rawAccount: RpcAccount): MyAccount;
-export function deserializeMyAccount(
-  context: RpcAccount | object,
-  rawAccount?: RpcAccount
-): MyAccount {
-  return deserializeAccount(
-    rawAccount ?? (context as RpcAccount),
-    getMyAccountAccountDataSerializer()
-  );
+export function deserializeMyAccount(rawAccount: RpcAccount): MyAccount {
+  return deserializeAccount(rawAccount, getMyAccountAccountDataSerializer());
 }
 
 export async function fetchMyAccount(

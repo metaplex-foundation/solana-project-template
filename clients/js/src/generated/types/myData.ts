@@ -17,14 +17,7 @@ export type MyData = { foo: number; bar: number };
 
 export type MyDataArgs = MyData;
 
-/** @deprecated Use `getMyDataSerializer()` without any argument instead. */
-export function getMyDataSerializer(
-  _context: object
-): Serializer<MyDataArgs, MyData>;
-export function getMyDataSerializer(): Serializer<MyDataArgs, MyData>;
-export function getMyDataSerializer(
-  _context: object = {}
-): Serializer<MyDataArgs, MyData> {
+export function getMyDataSerializer(): Serializer<MyDataArgs, MyData> {
   return struct<MyData>(
     [
       ['foo', u16()],
