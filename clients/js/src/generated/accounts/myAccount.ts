@@ -126,7 +126,7 @@ export function getMyAccountGpaBuilder(
   context: Pick<Context, 'rpc' | 'programs'>
 ) {
   const programId = context.programs.getPublicKey(
-    'mplProjectNameProgram',
+    'mplProjectName',
     'MyProgram1111111111111111111111111111111111'
   );
   return gpaBuilder(context, programId)

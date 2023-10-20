@@ -13,22 +13,22 @@ import {
   PublicKey,
 } from '@metaplex-foundation/umi';
 import {
-  getMplProjectNameProgramErrorFromCode,
-  getMplProjectNameProgramErrorFromName,
+  getMplProjectNameErrorFromCode,
+  getMplProjectNameErrorFromName,
 } from '../errors';
 
-export const MPL_PROJECT_NAME_PROGRAM_PROGRAM_ID =
+export const MPL_PROJECT_NAME_PROGRAM_ID =
   'MyProgram1111111111111111111111111111111111' as PublicKey<'MyProgram1111111111111111111111111111111111'>;
 
-export function createMplProjectNameProgramProgram(): Program {
+export function createMplProjectNameProgram(): Program {
   return {
-    name: 'mplProjectNameProgram',
-    publicKey: MPL_PROJECT_NAME_PROGRAM_PROGRAM_ID,
+    name: 'mplProjectName',
+    publicKey: MPL_PROJECT_NAME_PROGRAM_ID,
     getErrorFromCode(code: number, cause?: Error) {
-      return getMplProjectNameProgramErrorFromCode(code, this, cause);
+      return getMplProjectNameErrorFromCode(code, this, cause);
     },
     getErrorFromName(name: string, cause?: Error) {
-      return getMplProjectNameProgramErrorFromName(name, this, cause);
+      return getMplProjectNameErrorFromName(name, this, cause);
     },
     isOnCluster() {
       return true;
@@ -36,20 +36,20 @@ export function createMplProjectNameProgramProgram(): Program {
   };
 }
 
-export function getMplProjectNameProgramProgram<T extends Program = Program>(
+export function getMplProjectNameProgram<T extends Program = Program>(
   context: Pick<Context, 'programs'>,
   clusterFilter?: ClusterFilter
 ): T {
-  return context.programs.get<T>('mplProjectNameProgram', clusterFilter);
+  return context.programs.get<T>('mplProjectName', clusterFilter);
 }
 
-export function getMplProjectNameProgramProgramId(
+export function getMplProjectNameProgramId(
   context: Pick<Context, 'programs'>,
   clusterFilter?: ClusterFilter
 ): PublicKey {
   return context.programs.getPublicKey(
-    'mplProjectNameProgram',
-    MPL_PROJECT_NAME_PROGRAM_PROGRAM_ID,
+    'mplProjectName',
+    MPL_PROJECT_NAME_PROGRAM_ID,
     clusterFilter
   );
 }

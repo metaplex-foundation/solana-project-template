@@ -5,6 +5,6 @@
 //! [https://github.com/metaplex-foundation/kinobi]
 //!
 
-pub(crate) mod mpl_project_name_program;
+pub(crate) mod mpl_project_name;
 
-pub use self::mpl_project_name_program::MplProjectNameProgramError;
+pub use self::mpl_project_name::MplProjectNameError;

@@ -9,7 +9,7 @@ use num_derive::FromPrimitive;
 use thiserror::Error;
 
 #[derive(Clone, Debug, Eq, Error, FromPrimitive, PartialEq)]
-pub enum MplProjectNameProgramError {
+pub enum MplProjectNameError {
     /// 0 (0x0) - Invalid System Program
     #[error("Invalid System Program")]
     InvalidSystemProgram,
@@ -21,7 +21,7 @@ pub enum MplProjectNameProgramError {
     SerializationError,
 }
 
-impl solana_program::program_error::PrintProgramError for MplProjectNameProgramError {
+impl solana_program::program_error::PrintProgramError for MplProjectNameError {
     fn print<E>(&self) {
         solana_program::msg!(&self.to_string());
     }
