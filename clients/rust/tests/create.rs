@@ -22,8 +22,8 @@ async fn create() {
         .address(address.pubkey())
         .authority(context.payer.pubkey())
         .payer(context.payer.pubkey())
-        .foo(1)
-        .bar(2)
+        .arg1(1)
+        .arg2(2)
         .instruction();
 
     // When we create a new account.
@@ -51,6 +51,6 @@ async fn create() {
 
     let mut account_data = account.data.as_ref();
     let my_account = MyAccount::deserialize(&mut account_data).unwrap();
-    assert_eq!(my_account.data.foo, 1);
-    assert_eq!(my_account.data.bar, 2);
+    assert_eq!(my_account.data.field1, 1);
+    assert_eq!(my_account.data.field2, 2);
 }

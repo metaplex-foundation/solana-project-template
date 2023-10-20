@@ -55,7 +55,7 @@ impl Create {
         data.append(&mut args);
 
         solana_program::instruction::Instruction {
-            program_id: crate::MPL_PROJECT_NAME_ID,
+            program_id: crate::MPL_PROJECT_NAME_PROGRAM_ID,
             accounts,
             data,
         }
@@ -76,8 +76,8 @@ impl CreateInstructionData {
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct CreateInstructionArgs {
-    pub foo: u16,
-    pub bar: u32,
+    pub arg1: u16,
+    pub arg2: u32,
 }
 
 /// Instruction builder.
@@ -87,8 +87,8 @@ pub struct CreateBuilder {
     authority: Option<solana_program::pubkey::Pubkey>,
     payer: Option<solana_program::pubkey::Pubkey>,
     system_program: Option<solana_program::pubkey::Pubkey>,
-    foo: Option<u16>,
-    bar: Option<u32>,
+    arg1: Option<u16>,
+    arg2: Option<u32>,
     __remaining_accounts: Vec<solana_program::instruction::AccountMeta>,
 }
 
@@ -122,13 +122,13 @@ impl CreateBuilder {
         self
     }
     #[inline(always)]
-    pub fn foo(&mut self, foo: u16) -> &mut Self {
-        self.foo = Some(foo);
+    pub fn arg1(&mut self, arg1: u16) -> &mut Self {
+        self.arg1 = Some(arg1);
         self
     }
     #[inline(always)]
-    pub fn bar(&mut self, bar: u32) -> &mut Self {
-        self.bar = Some(bar);
+    pub fn arg2(&mut self, arg2: u32) -> &mut Self {
+        self.arg2 = Some(arg2);
         self
     }
     /// Add an aditional account to the instruction.
@@ -160,8 +160,8 @@ impl CreateBuilder {
                 .unwrap_or(solana_program::pubkey!("11111111111111111111111111111111")),
         };
         let args = CreateInstructionArgs {
-            foo: self.foo.clone().expect("foo is not set"),
-            bar: self.bar.clone().expect("bar is not set"),
+            arg1: self.arg1.clone().expect("arg1 is not set"),
+            arg2: self.arg2.clone().expect("arg2 is not set"),
         };
 
         accounts.instruction_with_remaining_accounts(args, &self.__remaining_accounts)
@@ -273,7 +273,7 @@ impl<'a, 'b> CreateCpi<'a, 'b> {
         data.append(&mut args);
 
         let instruction = solana_program::instruction::Instruction {
-            program_id: crate::MPL_PROJECT_NAME_ID,
+            program_id: crate::MPL_PROJECT_NAME_PROGRAM_ID,
             accounts,
             data,
         };
@@ -308,8 +308,8 @@ impl<'a, 'b> CreateCpiBuilder<'a, 'b> {
             authority: None,
             payer: None,
             system_program: None,
-            foo: None,
-            bar: None,
+            arg1: None,
+            arg2: None,
             __remaining_accounts: Vec::new(),
         });
         Self { instruction }
@@ -348,13 +348,13 @@ impl<'a, 'b> CreateCpiBuilder<'a, 'b> {
         self
     }
     #[inline(always)]
-    pub fn foo(&mut self, foo: u16) -> &mut Self {
-        self.instruction.foo = Some(foo);
+    pub fn arg1(&mut self, arg1: u16) -> &mut Self {
+        self.instruction.arg1 = Some(arg1);
         self
     }
     #[inline(always)]
-    pub fn bar(&mut self, bar: u32) -> &mut Self {
-        self.instruction.bar = Some(bar);
+    pub fn arg2(&mut self, arg2: u32) -> &mut Self {
+        self.instruction.arg2 = Some(arg2);
         self
     }
     /// Add an additional account to the instruction.
@@ -399,8 +399,8 @@ impl<'a, 'b> CreateCpiBuilder<'a, 'b> {
         signers_seeds: &[&[&[u8]]],
     ) -> solana_program::entrypoint::ProgramResult {
         let args = CreateInstructionArgs {
-            foo: self.instruction.foo.clone().expect("foo is not set"),
-            bar: self.instruction.bar.clone().expect("bar is not set"),
+            arg1: self.instruction.arg1.clone().expect("arg1 is not set"),
+            arg2: self.instruction.arg2.clone().expect("arg2 is not set"),
         };
         let instruction = CreateCpi {
             __program: self.instruction.__program,
@@ -430,8 +430,8 @@ struct CreateCpiBuilderInstruction<'a, 'b> {
     authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
     payer: Option<&'b solana_program::account_info::AccountInfo<'a>>,
     system_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-    foo: Option<u16>,
-    bar: Option<u32>,
+    arg1: Option<u16>,
+    arg2: Option<u32>,
     /// Additional instruction accounts `(AccountInfo, is_writable, is_signer)`.
     __remaining_accounts: Vec<(
         &'b solana_program::account_info::AccountInfo<'a>,

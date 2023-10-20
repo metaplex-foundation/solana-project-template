@@ -13,15 +13,15 @@ import {
   u32,
 } from '@metaplex-foundation/umi/serializers';
 
-export type MyData = { foo: number; bar: number };
+export type MyData = { field1: number; field2: number };
 
 export type MyDataArgs = MyData;
 
 export function getMyDataSerializer(): Serializer<MyDataArgs, MyData> {
   return struct<MyData>(
     [
-      ['foo', u16()],
-      ['bar', u32()],
+      ['field1', u16()],
+      ['field2', u32()],
     ],
     { description: 'MyData' }
   ) as Serializer<MyDataArgs, MyData>;

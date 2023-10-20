@@ -45,11 +45,11 @@ export type CreateInstructionAccounts = {
 // Data.
 export type CreateInstructionData = {
   discriminator: number;
-  foo: number;
-  bar: number;
+  arg1: number;
+  arg2: number;
 };
 
-export type CreateInstructionDataArgs = { foo: number; bar: number };
+export type CreateInstructionDataArgs = { arg1: number; arg2: number };
 
 export function getCreateInstructionDataSerializer(): Serializer<
   CreateInstructionDataArgs,
@@ -59,8 +59,8 @@ export function getCreateInstructionDataSerializer(): Serializer<
     struct<CreateInstructionData>(
       [
         ['discriminator', u8()],
-        ['foo', u16()],
-        ['bar', u32()],
+        ['arg1', u16()],
+        ['arg2', u32()],
       ],
       { description: 'CreateInstructionData' }
     ),
@@ -78,7 +78,7 @@ export function create(
 ): TransactionBuilder {
   // Program ID.
   const programId = context.programs.getPublicKey(
-    'mplProjectName',
+    'mplProjectNameProgram',
     'MyProgram1111111111111111111111111111111111'
   );
 

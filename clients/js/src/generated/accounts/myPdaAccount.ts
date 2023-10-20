@@ -117,7 +117,7 @@ export function getMyPdaAccountGpaBuilder(
   context: Pick<Context, 'rpc' | 'programs'>
 ) {
   const programId = context.programs.getPublicKey(
-    'mplProjectName',
+    'mplProjectNameProgram',
     'MyProgram1111111111111111111111111111111111'
   );
   return gpaBuilder(context, programId)
@@ -145,7 +145,7 @@ export function findMyPdaAccountPda(
   }
 ): Pda {
   const programId = context.programs.getPublicKey(
-    'mplProjectName',
+    'mplProjectNameProgram',
     'MyProgram1111111111111111111111111111111111'
   );
   return context.eddsa.findPda(programId, [

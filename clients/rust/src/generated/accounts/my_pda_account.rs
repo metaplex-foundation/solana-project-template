@@ -28,12 +28,12 @@ impl MyPdaAccount {
         solana_program::pubkey::Pubkey::create_program_address(
             &[
                 "myPdaAccount".as_bytes(),
-                crate::MPL_PROJECT_NAME_ID.as_ref(),
+                crate::MPL_PROJECT_NAME_PROGRAM_ID.as_ref(),
                 authority.as_ref(),
                 name.to_string().as_ref(),
                 &[bump],
             ],
-            &crate::MPL_PROJECT_NAME_ID,
+            &crate::MPL_PROJECT_NAME_PROGRAM_ID,
         )
     }
 
@@ -41,11 +41,11 @@ impl MyPdaAccount {
         solana_program::pubkey::Pubkey::find_program_address(
             &[
                 "myPdaAccount".as_bytes(),
-                crate::MPL_PROJECT_NAME_ID.as_ref(),
+                crate::MPL_PROJECT_NAME_PROGRAM_ID.as_ref(),
                 authority.as_ref(),
                 name.to_string().as_ref(),
             ],
-            &crate::MPL_PROJECT_NAME_ID,
+            &crate::MPL_PROJECT_NAME_PROGRAM_ID,
         )
     }
 
