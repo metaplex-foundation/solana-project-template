@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "name": "mpl_project_name",
+  "name": "mpl_project_name_program",
   "instructions": [
     {
       "name": "Create",
@@ -103,11 +103,11 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "foo",
+            "name": "arg1",
             "type": "u16"
           },
           {
-            "name": "bar",
+            "name": "arg2",
             "type": "u32"
           }
         ]
@@ -119,11 +119,11 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "foo",
+            "name": "field1",
             "type": "u16"
           },
           {
-            "name": "bar",
+            "name": "field2",
             "type": "u32"
           }
         ]

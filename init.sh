@@ -38,6 +38,9 @@ PASCAL_OLD_NAME=$(echo "$OLD_NAME" | perl -pe 's/(^|-)(\w)/\U$2/g')
 TITLE_NAME=$(echo "$PASCAL_NAME" | perl -pe 's/(\B[A-Z])/ $1/g')
 TITLE_OLD_NAME=$(echo "$PASCAL_OLD_NAME" | perl -pe 's/(\B[A-Z])/ $1/g')
 
+# Update the program name on the Kinobi config
+xargs -0 perl -pi -e "s/$CAMEL_OLD_NAME/$CAMEL_NAME/g"
+
 # Find and replace
 find $ROOT_DIR \
   \( -type d -name .git -prune \) -o \
