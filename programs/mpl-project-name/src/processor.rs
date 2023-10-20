@@ -58,8 +58,8 @@ fn create<'a>(accounts: &'a [AccountInfo<'a>], args: CreateArgs) -> ProgramResul
         key: Key::MyAccount,
         authority: *ctx.accounts.authority.key,
         data: MyData {
-            foo: args.foo,
-            bar: args.bar,
+            field1: args.arg1,
+            field2: args.arg2,
         },
     };
 

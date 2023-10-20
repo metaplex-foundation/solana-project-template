@@ -54,8 +54,8 @@ pub struct MyPdaAccount {
 
 #[derive(Clone, BorshSerialize, BorshDeserialize, Debug)]
 pub struct MyData {
-    pub foo: u16,
-    pub bar: u32,
+    pub field1: u16,
+    pub field2: u32,
 }
 
 impl MyData {

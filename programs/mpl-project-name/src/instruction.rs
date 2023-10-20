@@ -16,8 +16,8 @@ pub enum MplProjectNameInstruction {
 #[repr(C)]
 #[derive(BorshSerialize, BorshDeserialize, PartialEq, Eq, Debug, Clone)]
 pub struct CreateArgs {
-    /// Some description for foo.
-    pub foo: u16,
-    /// Some description for bar.
-    pub bar: u32,
+    /// Some description for arg1.
+    pub arg1: u16,
+    /// Some description for arg2.
+    pub arg2: u32,
 }
