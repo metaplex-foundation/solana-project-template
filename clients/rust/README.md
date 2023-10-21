@@ -19,16 +19,6 @@ The client SDK is divided into several modules:
 - `instructions`: structs to facilitate the creation of instructions, instruction arguments and CPI instructions
 - `types`: structs representing types used by the program
 
-## Testing
+## Contributing
 
-To run the SDK tests, run the following from the root directory of the repository:
-
-```bash
-pnpm install
-```
-
-and then:
-
-```bash
-pnpm clients:rust:test
-```
+Check out the [Contributing Guide](./CONTRIBUTING.md) the learn more about how to contribute to this library.
