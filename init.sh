@@ -61,7 +61,7 @@ find $ROOT_DIR \
 
 # Update folder and file names
 mv "$ROOT_DIR/programs/$OLD_NAME" "$ROOT_DIR/programs/$NAME"
-mv "$ROOT_DIR/idls/$SNAKE_OLD_NAME.json" "$ROOT_DIR/idls/$SNAKE_NAME.json"
+mv "$ROOT_DIR/idls/${SNAKE_OLD_NAME}_program.json" "$ROOT_DIR/idls/${SNAKE_NAME}_program.json"
 mv "$ROOT_DIR/clients/js/src/generated/errors/$CAMEL_OLD_NAME.ts" "$ROOT_DIR/clients/js/src/generated/errors/$CAMEL_NAME.ts"
 mv "$ROOT_DIR/clients/js/src/generated/programs/$CAMEL_OLD_NAME.ts" "$ROOT_DIR/clients/js/src/generated/programs/$CAMEL_NAME.ts"
 
