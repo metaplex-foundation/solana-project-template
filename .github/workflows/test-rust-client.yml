@@ -12,7 +12,7 @@ env:
 jobs:
   test_sdk:
     name: Test
-    runs-on: ubuntu-latest-16-cores
+    runs-on: ubuntu-latest
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
