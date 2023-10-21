@@ -3,15 +3,15 @@ use solana_program::{
     program_error::PrintProgramError, pubkey::Pubkey,
 };
 
-use crate::{error::MplProjectNameError, processor::Processor};
+use crate::{error::MplProjectNameError, processor};
 
 entrypoint!(process_instruction);
-fn process_instruction(
-    program_id: &Pubkey,
-    accounts: &[AccountInfo],
+fn process_instruction<'a>(
+    program_id: &'a Pubkey,
+    accounts: &'a [AccountInfo<'a>],
     instruction_data: &[u8],
 ) -> ProgramResult {
-    if let Err(error) = Processor::process_instruction(program_id, accounts, instruction_data) {
+    if let Err(error) = processor::process_instruction(program_id, accounts, instruction_data) {
         // catch the error so we can print it
         error.print::<MplProjectNameError>();
         return Err(error);

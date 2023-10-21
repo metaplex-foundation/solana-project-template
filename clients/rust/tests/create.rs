@@ -1,7 +1,7 @@
-#![cfg(feature = "test-bpf")]
+#![cfg(feature = "test-sbf")]
 
 use borsh::BorshDeserialize;
-use mpl_project_name::{instruction::CreateArgs, state::MyAccount};
+use mpl_project_name::{accounts::MyAccount, instructions::CreateBuilder};
 use solana_program_test::{tokio, ProgramTest};
 use solana_sdk::{
     signature::{Keypair, Signer},
@@ -10,19 +10,23 @@ use solana_sdk::{
 
 #[tokio::test]
 async fn create() {
-    let mut context = ProgramTest::new("mpl_project_name", mpl_project_name::ID, None)
+    let mut context = ProgramTest::new("mpl_project_name_program", mpl_project_name::ID, None)
         .start_with_context()
         .await;
 
-    let address = Keypair::new();
-    let create_args = CreateArgs { foo: 1, bar: 2 };
+    // Given a new keypair.
 
-    let ix = mpl_project_name::instruction::create(
-        &address.pubkey(),
-        &context.payer.pubkey(),
-        &context.payer.pubkey(),
-        create_args,
-    );
+    let address = Keypair::new();
+
+    let ix = CreateBuilder::new()
+        .address(address.pubkey())
+        .authority(context.payer.pubkey())
+        .payer(context.payer.pubkey())
+        .arg1(1)
+        .arg2(2)
+        .instruction();
+
+    // When we create a new account.
 
     let tx = Transaction::new_signed_with_payer(
         &[ix],
@@ -31,6 +35,8 @@ async fn create() {
         context.last_blockhash,
     );
     context.banks_client.process_transaction(tx).await.unwrap();
+
+    // Then an account was created with the correct data.
 
     let account = context
         .banks_client
@@ -45,6 +51,6 @@ async fn create() {
 
     let mut account_data = account.data.as_ref();
     let my_account = MyAccount::deserialize(&mut account_data).unwrap();
-    assert_eq!(my_account.data.foo, 1);
-    assert_eq!(my_account.data.bar, 2);
+    assert_eq!(my_account.data.field1, 1);
+    assert_eq!(my_account.data.field2, 2);
 }

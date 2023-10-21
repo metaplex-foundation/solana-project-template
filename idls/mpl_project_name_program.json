@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "name": "mpl_project_name",
+  "name": "mpl_project_name_program",
   "instructions": [
     {
       "name": "Create",
@@ -9,25 +9,33 @@
           "name": "address",
           "isMut": true,
           "isSigner": true,
-          "desc": "The address of the new account"
+          "docs": [
+            "The address of the new account"
+          ]
         },
         {
           "name": "authority",
           "isMut": false,
           "isSigner": false,
-          "desc": "The authority of the new account"
+          "docs": [
+            "The authority of the new account"
+          ]
         },
         {
           "name": "payer",
           "isMut": true,
           "isSigner": true,
-          "desc": "The account paying for the storage fees"
+          "docs": [
+            "The account paying for the storage fees"
+          ]
         },
         {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false,
-          "desc": "The system program"
+          "docs": [
+            "The system program"
+          ]
         }
       ],
       "args": [
@@ -95,11 +103,11 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "foo",
+            "name": "arg1",
             "type": "u16"
           },
           {
-            "name": "bar",
+            "name": "arg2",
             "type": "u32"
           }
         ]
@@ -111,11 +119,11 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "foo",
+            "name": "field1",
             "type": "u16"
           },
           {
-            "name": "bar",
+            "name": "field2",
             "type": "u32"
           }
         ]
@@ -159,7 +167,7 @@
   "metadata": {
     "origin": "shank",
     "address": "MyProgram1111111111111111111111111111111111",
-    "binaryVersion": "0.0.12",
-    "libVersion": "0.0.12"
+    "binaryVersion": "0.2.0",
+    "libVersion": "0.2.0"
   }
 }

@@ -14,11 +14,15 @@ You will then have access to the following commands.
 
 - `programs:build` - Build all programs and fetch all dependant programs.
 - `programs:test` - Test all programs.
+- `programs:debug` - Test all programs with logs enabled.
 - `programs:clean` - Clean all built and fetched programs.
+- `clients:rust:test` -  Run the Rust client tests.
+- `clients:js:test` -  Run the JS client tests.
+- `pnpm generate` - Shortcut for `pnpm generate:idls && pnpm generate:clients`.
 - `pnpm generate:idls` - Generate IDLs for all programs, as configured in the `configs/shank.cjs` file.
 - `pnpm generate:clients` - Generate clients using Kinobi, as configured in the `configs/kinobi.cjs` file.
-- `pnpm generate` - Shortcut for `pnpm generate:idls && pnpm generate:clients`.
 - `pnpm validator` - Start a local validator using Amman, as configured in the `configs/validator.cjs` file.
+- `pnpm validator:debug` - Start a local validator using Amman with logs enabled, as configured in the `configs/validator.cjs` file.
 - `pnpm validator:stop` - Stop the local validator.
 - `pnpm validator:logs` - Show the logs of the local validator.
 
@@ -27,9 +31,20 @@ You will then have access to the following commands.
 Each client has its own README with instructions on how to get started. You can find them in the `clients` folder.
 
 - [JavaScript client](./clients/js/README.md)
+- [Rust client](./clients/rust/README.md)
+
+In order to generate the clients, run the following command.
+
+```sh
+pnpm generate
+```
+
+You will need to run `pnpm generate` to re-generate the clients when something changes in the program(s).
 
 ## Setting up CI/CD using GitHub actions
 
 Most of the CI/CD should already be set up for you and the `.github/.env` file can be used to tweak the variables of the workflows.
 
-However, the "Deploy JS Client" workflow — configured in `.github/workflows/deploy-js.yml` — requires a few more steps to work. See the [CONTRIBUTING.md file of the JavaScript client](./clients/js/CONTRIBUTING.md#setting-up-github-actions) for more information.
+However, the "Publish JS Client" workflow — configured in `.github/workflows/publish-js-client.yml` — requires a few more steps to work. See the [CONTRIBUTING.md file of the JavaScript client](./clients/js/CONTRIBUTING.md#setting-up-github-actions) for more information.
+
+Similarly, the "Publish Rust Client" workflow — configured in `.github/workflows/publish-rust-client.yml` — requires a few more steps to work. See the [CONTRIBUTING.md file of the Rust client](./clients/rust/CONTRIBUTING.md#setting-up-github-actions) for more information.

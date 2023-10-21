@@ -38,12 +38,16 @@ PASCAL_OLD_NAME=$(echo "$OLD_NAME" | perl -pe 's/(^|-)(\w)/\U$2/g')
 TITLE_NAME=$(echo "$PASCAL_NAME" | perl -pe 's/(\B[A-Z])/ $1/g')
 TITLE_OLD_NAME=$(echo "$PASCAL_OLD_NAME" | perl -pe 's/(\B[A-Z])/ $1/g')
 
+# Update the program name on the Kinobi config
+find $ROOT_DIR/configs/kinobi.cjs -type f -print0 | xargs -0 perl -pi -e "s/$CAMEL_OLD_NAME/$CAMEL_NAME/g"
+
 # Find and replace
 find $ROOT_DIR \
   \( -type d -name .git -prune \) -o \
   \( -type d -name node_modules -prune \) -o \
   \( -type d -name dist -prune \) -o \
   \( -type d -name .crates -prune \) -o \
+  \( -type d -name target -prune \) -o \
   ! -name '*.sh' \
   -type f -print0 |
   xargs -0 perl -pi -e "s/$OLD_NAME/$NAME/g; \
@@ -57,7 +61,7 @@ find $ROOT_DIR \
 
 # Update folder and file names
 mv "$ROOT_DIR/programs/$OLD_NAME" "$ROOT_DIR/programs/$NAME"
-mv "$ROOT_DIR/idls/$SNAKE_OLD_NAME.json" "$ROOT_DIR/idls/$SNAKE_NAME.json"
+mv "$ROOT_DIR/idls/${SNAKE_OLD_NAME}_program.json" "$ROOT_DIR/idls/${SNAKE_NAME}_program.json"
 mv "$ROOT_DIR/clients/js/src/generated/errors/$CAMEL_OLD_NAME.ts" "$ROOT_DIR/clients/js/src/generated/errors/$CAMEL_NAME.ts"
 mv "$ROOT_DIR/clients/js/src/generated/programs/$CAMEL_OLD_NAME.ts" "$ROOT_DIR/clients/js/src/generated/programs/$CAMEL_NAME.ts"
 

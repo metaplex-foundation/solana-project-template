@@ -13,7 +13,7 @@ module.exports = {
       {
         label: "Mpl Project Name",
         programId: "MyProgram1111111111111111111111111111111111",
-        deployPath: getProgram("mpl_project_name.so"),
+        deployPath: getProgram("mpl_project_name_program.so"),
       },
       // Below are external programs that should be included in the local validator.
       // You may configure which ones to fetch from the cluster when building
