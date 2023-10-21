@@ -39,7 +39,7 @@ TITLE_NAME=$(echo "$PASCAL_NAME" | perl -pe 's/(\B[A-Z])/ $1/g')
 TITLE_OLD_NAME=$(echo "$PASCAL_OLD_NAME" | perl -pe 's/(\B[A-Z])/ $1/g')
 
 # Update the program name on the Kinobi config
-xargs -0 perl -pi -e "s/$CAMEL_OLD_NAME/$CAMEL_NAME/g"
+find $ROOT_DIR/configs/kinobi.cjs -type f -print0 | xargs -0 perl -pi -e "s/$CAMEL_OLD_NAME/$CAMEL_NAME/g"
 
 # Find and replace
 find $ROOT_DIR \
@@ -47,6 +47,7 @@ find $ROOT_DIR \
   \( -type d -name node_modules -prune \) -o \
   \( -type d -name dist -prune \) -o \
   \( -type d -name .crates -prune \) -o \
+  \( -type d -name target -prune \) -o \
   ! -name '*.sh' \
   -type f -print0 |
   xargs -0 perl -pi -e "s/$OLD_NAME/$NAME/g; \
