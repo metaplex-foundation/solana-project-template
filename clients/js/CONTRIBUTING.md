@@ -30,17 +30,17 @@ pnpm format:fix
 
 When something changes in the program(s), make sure to run `pnpm generate` in the root directory, to re-generate the clients accordingly.
 
-## Deploying the JavaScript client
+## Publishing the JavaScript client
 
-You can deploy a new version of the JavaScript client by manually dispatching the "Deploy JS Client" workflow in the GitHub Actions tab of the repository.
+You can publish a new version of the JavaScript client by manually dispatching the "Publish JS Client" workflow in the GitHub Actions tab of the repository.
 
-![Click on the "Actions" tab, then on the "Deploy JS Client" workflow, then on the "Run workflow" dropdown. Select your options before clicking on the final "Run workflow" button inside the dropdown body.](https://user-images.githubusercontent.com/3642397/235444901-6ee95f30-ed84-4eef-b1c4-8b8474ab82a4.png)
+![Click on the "Actions" tab, then on the "Publish JS Client" workflow, then on the "Run workflow" dropdown. Select your options before clicking on the final "Run workflow" button inside the dropdown body.](https://user-images.githubusercontent.com/3642397/235444901-6ee95f30-ed84-4eef-b1c4-8b8474ab82a4.png)
 
 For this to work, some initial setup is required on the repository as explained below.
 
 ## Setting up GitHub actions
 
-To deploy JavaScript clients using GitHub actions, we first need the following secret variables to be set up on the repository.
+To publish JavaScript clients using GitHub actions, we first need the following secret variables to be set up on the repository.
 
 - `NPM_TOKEN` — An access token that can publish your packages to NPM.
 - `VERCEL_TOKEN` — An access token that can deploy to Vercel.
@@ -56,4 +56,4 @@ Then, we'll need to create a new GitHub environment called `js-client-documentat
   - Install Command: `pnpm install`
   - Development Command: _None_
 
-With all that set up, you can now run the "Deploy JS Client" workflow by dispatching it from the GitHub UI.
+With all that set up, you can now run the "Publish JS Client" workflow by dispatching it from the GitHub UI.
