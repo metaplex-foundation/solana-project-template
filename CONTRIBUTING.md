@@ -33,6 +33,14 @@ Each client has its own README with instructions on how to get started. You can 
 - [JavaScript client](./clients/js/README.md)
 - [Rust client](./clients/rust/README.md)
 
+In order to generate the clients, run the following command.
+
+```sh
+pnpm generate
+```
+
+You will need to run `pnpm generate` to re-generate the clients when something changes in the program(s).
+
 ## Setting up CI/CD using GitHub actions
 
 Most of the CI/CD should already be set up for you and the `.github/.env` file can be used to tweak the variables of the workflows.
