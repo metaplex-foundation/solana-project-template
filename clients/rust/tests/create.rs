@@ -10,7 +10,7 @@ use solana_sdk::{
 
 #[tokio::test]
 async fn create() {
-    let mut context = ProgramTest::new("mpl_project_name", mpl_project_name::ID, None)
+    let mut context = ProgramTest::new("mpl_project_name_program", mpl_project_name::ID, None)
         .start_with_context()
         .await;
 
