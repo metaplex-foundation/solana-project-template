@@ -22,7 +22,7 @@
 
 ## Getting started
 
-1. [Use this template](https://github.com/metaplex-foundation/solana-project-template/generate) to create a new repository.
+1. [Use this template](https://github.com/new?template_name=solana-project-template&template_owner=metaplex-foundation) to create a new repository.
 2. Open the `init.sh` script and update the following variables.
    ```sh
    NAME="mpl-project-name"
