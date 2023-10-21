@@ -35,13 +35,10 @@ impl MyAccount {
     }
 
     pub fn save(&self, account: &AccountInfo) -> ProgramResult {
-        let mut bytes = Vec::with_capacity(account.data_len());
-        self.serialize(&mut bytes).map_err(|error| {
+        borsh::to_writer(&mut account.data.borrow_mut()[..], self).map_err(|error| {
             msg!("Error: {}", error);
-            MplProjectNameError::SerializationError
-        })?;
-        account.try_borrow_mut_data().unwrap()[..bytes.len()].copy_from_slice(&bytes);
-        Ok(())
+            MplProjectNameError::SerializationError.into()
+        })
     }
 }
 
