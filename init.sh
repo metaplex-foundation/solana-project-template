@@ -64,6 +64,7 @@ mv "$ROOT_DIR/programs/$OLD_NAME" "$ROOT_DIR/programs/$NAME"
 mv "$ROOT_DIR/idls/${SNAKE_OLD_NAME}_program.json" "$ROOT_DIR/idls/${SNAKE_NAME}_program.json"
 mv "$ROOT_DIR/clients/js/src/generated/errors/$CAMEL_OLD_NAME.ts" "$ROOT_DIR/clients/js/src/generated/errors/$CAMEL_NAME.ts"
 mv "$ROOT_DIR/clients/js/src/generated/programs/$CAMEL_OLD_NAME.ts" "$ROOT_DIR/clients/js/src/generated/programs/$CAMEL_NAME.ts"
+mv "$ROOT_DIR/clients/rust/src/generated/errors/$SNAKE_OLD_NAME.rs" "$ROOT_DIR/clients/rust/src/generated/errors/$SNAKE_NAME.rs"
 
 # Update README
 rm "$ROOT_DIR/README.md"
