@@ -12,12 +12,12 @@ pnpm install
 
 You will then have access to the following commands.
 
-- `programs:build` - Build all programs and fetch all dependant programs.
-- `programs:test` - Test all programs.
-- `programs:debug` - Test all programs with logs enabled.
-- `programs:clean` - Clean all built and fetched programs.
-- `clients:rust:test` -  Run the Rust client tests.
-- `clients:js:test` -  Run the JS client tests.
+- `pnpm programs:build` - Build all programs and fetch all dependant programs.
+- `pnpm programs:test` - Test all programs.
+- `pnpm programs:debug` - Test all programs with logs enabled.
+- `pnpm programs:clean` - Clean all built and fetched programs.
+- `pnpm clients:rust:test` -  Run the Rust client tests.
+- `pnpm clients:js:test` -  Run the JS client tests.
 - `pnpm generate` - Shortcut for `pnpm generate:idls && pnpm generate:clients`.
 - `pnpm generate:idls` - Generate IDLs for all programs, as configured in the `configs/shank.cjs` file.
 - `pnpm generate:clients` - Generate clients using Kinobi, as configured in the `configs/kinobi.cjs` file.
