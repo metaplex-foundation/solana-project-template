@@ -1,4 +1,5 @@
 [workspace]
+resolver = "2"
 members = [
     "clients/rust",
     "programs/mpl-project-name"
