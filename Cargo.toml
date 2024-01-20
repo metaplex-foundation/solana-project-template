@@ -1,2 +1,5 @@
 [workspace]
-members = ["programs/mpl-project-name"]
+members = [
+    "clients/rust",
+    "programs/mpl-project-name"
+]
