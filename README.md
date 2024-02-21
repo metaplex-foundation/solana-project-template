@@ -23,6 +23,7 @@
 ## Getting started
 
 1. [Use this template](https://github.com/new?template_name=solana-project-template&template_owner=metaplex-foundation) to create a new repository.
+
 2. Open the `init.sh` script and update the following variables.
    ```sh
    NAME="mpl-project-name"
@@ -33,4 +34,5 @@
    ```sh
    ./init.sh
    ```
+3. Add your project license to `LICENSE`.
 4. [Read the `CONTRIBUTING.md` file](./CONTRIBUTING.md) to learn more about how to use the project.
