@@ -10,20 +10,20 @@ const kinobi = k.createFromIdls([path.join(idlDir, "mpl_project_name_program.jso
 
 // Update programs.
 kinobi.update(
-  new k.UpdateProgramsVisitor({
+  new k.updateProgramsVisitor({
     mplProjectNameProgram: { name: "mplProjectName" },
   })
 );
 
 // Update accounts.
 kinobi.update(
-  new k.UpdateAccountsVisitor({
+  new k.updateAccountsVisitor({
     myPdaAccount: {
       seeds: [
-        k.stringConstantSeed("myPdaAccount"),
-        k.programSeed(),
-        k.publicKeySeed("authority", "The address of the authority"),
-        k.stringSeed("name", "The name of the account"),
+        k.constantPdaSeedNodeFromString("myPdaAccount"),
+        k.programIdPdaSeedNode(),
+        k.variablePdaSeedNode("authority", k.publicKeyTypeNode(), "The address of the authority"),
+        k.variablePdaSeedNode("name", k.stringTypeNode(), "The name of the account"),
       ],
     },
   })
@@ -31,17 +31,19 @@ kinobi.update(
 
 // Update instructions.
 kinobi.update(
-  new k.UpdateInstructionsVisitor({
+  new k.updateInstructionsVisitor({
     create: {
-      bytesCreatedOnChain: k.bytesFromAccount("myAccount"),
+      byteDeltas: [
+        k.instructionByteDeltaNode(k.accountLinkNode("myAccount")),
+      ],
     },
   })
 );
 
 // Set ShankAccount discriminator.
-const key = (name) => ({ field: "key", value: k.vEnum("Key", name) });
+const key = (name) => ({ field: "key", value: k.enumValueNode("Key", name) });
 kinobi.update(
-  new k.SetAccountDiscriminatorFromFieldVisitor({
+  new k.setAccountDiscriminatorFromFieldVisitor({
     myAccount: key("MyAccount"),
     myPdaAccount: key("MyPdaAccount"),
   })
@@ -50,13 +52,13 @@ kinobi.update(
 // Render JavaScript.
 const jsDir = path.join(clientDir, "js", "src", "generated");
 const prettier = require(path.join(clientDir, "js", ".prettierrc.json"));
-kinobi.accept(new k.RenderJavaScriptVisitor(jsDir, { prettier }));
+kinobi.accept(new k.renderJavaScriptVisitor(jsDir, { prettier }));
 
 // Render Rust.
 const crateDir = path.join(clientDir, "rust");
 const rustDir = path.join(clientDir, "rust", "src", "generated");
 kinobi.accept(
-  new k.RenderRustVisitor(rustDir, {
+  new k.renderRustVisitor(rustDir, {
     formatCode: true,
     crateFolder: crateDir,
   })

@@ -152,7 +152,7 @@ export function findMyPdaAccountPda(
     string({ size: 'variable' }).serialize('myPdaAccount'),
     publicKeySerializer().serialize(programId),
     publicKeySerializer().serialize(seeds.authority),
-    string({ size: 'variable' }).serialize(seeds.name),
+    string().serialize(seeds.name),
   ]);
 }
 

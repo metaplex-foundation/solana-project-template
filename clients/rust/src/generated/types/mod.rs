@@ -5,8 +5,8 @@
 //! [https://github.com/metaplex-foundation/kinobi]
 //!
 
-pub(crate) mod key;
-pub(crate) mod my_data;
+pub(crate) mod r#key;
+pub(crate) mod r#my_data;
 
-pub use self::key::*;
-pub use self::my_data::*;
+pub use self::r#key::*;
+pub use self::r#my_data::*;

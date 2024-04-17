@@ -20,9 +20,19 @@ pub struct MyPdaAccount {
 impl MyPdaAccount {
     pub const LEN: usize = 2;
 
+    /// Prefix values used to generate a PDA for this account.
+    ///
+    /// Values are positional and appear in the following order:
+    ///
+    ///   0. `MyPdaAccount::PREFIX`
+    ///   1. `crate::MPL_PROJECT_NAME_ID`
+    ///   2. authority (`Pubkey`)
+    ///   3. name (`String`)
+    pub const PREFIX: &'static [u8] = "myPdaAccount".as_bytes();
+
     pub fn create_pda(
         authority: Pubkey,
-        name: &str,
+        name: String,
         bump: u8,
     ) -> Result<solana_program::pubkey::Pubkey, solana_program::pubkey::PubkeyError> {
         solana_program::pubkey::Pubkey::create_program_address(
@@ -37,7 +47,7 @@ impl MyPdaAccount {
         )
     }
 
-    pub fn find_pda(authority: &Pubkey, name: &str) -> (solana_program::pubkey::Pubkey, u8) {
+    pub fn find_pda(authority: &Pubkey, name: String) -> (solana_program::pubkey::Pubkey, u8) {
         solana_program::pubkey::Pubkey::find_program_address(
             &[
                 "myPdaAccount".as_bytes(),

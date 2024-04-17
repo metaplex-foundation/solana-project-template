@@ -80,7 +80,14 @@ pub struct CreateInstructionArgs {
     pub arg2: u32,
 }
 
-/// Instruction builder.
+/// Instruction builder for `Create`.
+///
+/// ### Accounts:
+///
+///   0. `[writable, signer]` address
+///   1. `[]` authority
+///   2. `[writable, signer]` payer
+///   3. `[optional]` system_program (default to `11111111111111111111111111111111`)
 #[derive(Default)]
 pub struct CreateBuilder {
     address: Option<solana_program::pubkey::Pubkey>,
@@ -295,7 +302,14 @@ impl<'a, 'b> CreateCpi<'a, 'b> {
     }
 }
 
-/// `create` CPI instruction builder.
+/// Instruction builder for `Create` via CPI.
+///
+/// ### Accounts:
+///
+///   0. `[writable, signer]` address
+///   1. `[]` authority
+///   2. `[writable, signer]` payer
+///   3. `[]` system_program
 pub struct CreateCpiBuilder<'a, 'b> {
     instruction: Box<CreateCpiBuilderInstruction<'a, 'b>>,
 }

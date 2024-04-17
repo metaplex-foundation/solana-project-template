@@ -17,7 +17,7 @@ const nameToErrorMap: Map<string, ProgramErrorConstructor> = new Map();
 
 /** InvalidSystemProgram: Invalid System Program */
 export class InvalidSystemProgramError extends ProgramError {
-  readonly name: string = 'InvalidSystemProgram';
+  override readonly name: string = 'InvalidSystemProgram';
 
   readonly code: number = 0x0; // 0
 
@@ -30,7 +30,7 @@ nameToErrorMap.set('InvalidSystemProgram', InvalidSystemProgramError);
 
 /** DeserializationError: Error deserializing account */
 export class DeserializationErrorError extends ProgramError {
-  readonly name: string = 'DeserializationError';
+  override readonly name: string = 'DeserializationError';
 
   readonly code: number = 0x1; // 1
 
@@ -43,7 +43,7 @@ nameToErrorMap.set('DeserializationError', DeserializationErrorError);
 
 /** SerializationError: Error serializing account */
 export class SerializationErrorError extends ProgramError {
-  readonly name: string = 'SerializationError';
+  override readonly name: string = 'SerializationError';
 
   readonly code: number = 0x2; // 2
 
