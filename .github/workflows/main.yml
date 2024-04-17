@@ -110,6 +110,13 @@ jobs:
     uses: ./.github/workflows/test-js-client.yml
     secrets: inherit
 
+  benchmark:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    name: Benchmark
+    needs: generate_clients
+    uses: ./.github/workflows/benchmark.yml
+    secrets: inherit
+
   build_rust_client:
     if: needs.changes.outputs.rust_client == 'true'
     name: Rust Client
