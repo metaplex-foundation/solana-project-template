@@ -10,9 +10,11 @@ publish = false
 crate-type = ["cdylib", "lib"]
 
 [dependencies]
+solana-program-macros = { path = "/Users/kelliott/Dev/solana-program-macros" }
+solana-program-types = { path = "/Users/kelliott/Dev/solana-program-types" }
+solana-program-traits = { path = "/Users/kelliott/Dev/solana-program-traits" }
 borsh = "^0.10"
 shank = "0.3.0"
 num-derive = "^0.3"
 num-traits = "^0.2"
-solana-program = "~1.16"
 thiserror = "^1.0"

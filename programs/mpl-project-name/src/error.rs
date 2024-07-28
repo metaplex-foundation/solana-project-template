@@ -1,9 +1,7 @@
 use num_derive::FromPrimitive;
-use solana_program::{
-    decode_error::DecodeError,
-    msg,
-    program_error::{PrintProgramError, ProgramError},
-};
+use solana_program_macros::msg;
+use solana_program_traits::{DecodeError, PrintProgramError};
+use solana_program_types::ProgramError;
 use thiserror::Error;
 
 #[derive(Error, Clone, Debug, Eq, PartialEq, FromPrimitive)]

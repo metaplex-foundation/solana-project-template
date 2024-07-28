@@ -1,7 +1,5 @@
-use solana_program::{
-    account_info::AccountInfo, entrypoint, entrypoint::ProgramResult,
-    program_error::PrintProgramError, pubkey::Pubkey,
-};
+use solana_program_macros::{entrypoint, entrypoint::ProgramResult};
+use solana_program_types::{AccountInfo, Pubkey};
 
 use crate::{error::MplProjectNameError, processor};
 

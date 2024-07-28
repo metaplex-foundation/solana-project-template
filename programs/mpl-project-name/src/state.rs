@@ -1,10 +1,7 @@
 use borsh::{BorshDeserialize, BorshSerialize};
 use shank::ShankAccount;
-use solana_program::account_info::AccountInfo;
-use solana_program::entrypoint::ProgramResult;
-use solana_program::msg;
-use solana_program::program_error::ProgramError;
-use solana_program::pubkey::Pubkey;
+use solana_program_macros::msg;
+use solana_program_types::{AccountInfo, ProgramError, ProgramResult, Pubkey};
 
 use crate::error::MplProjectNameError;
 

@@ -1,8 +1,9 @@
 use borsh::BorshDeserialize;
 use solana_program::{
-    account_info::AccountInfo, entrypoint::ProgramResult, msg, program::invoke, pubkey::Pubkey,
-    rent::Rent, system_instruction, system_program, sysvar::Sysvar,
+    program::invoke, rent::Rent, system_instruction, system_program, sysvar::Sysvar,
 };
+use solana_program_macros::msg;
+use solana_program_types::{AccountInfo, ProgramResult, Pubkey};
 
 use crate::error::MplProjectNameError;
 use crate::instruction::accounts::CreateAccounts;
