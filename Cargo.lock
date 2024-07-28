@@ -2093,7 +2093,7 @@ name = "mpl-project-name-program"
 version = "0.1.0"
 dependencies = [
  "borsh 0.10.3",
- "num-derive 0.3.3",
+ "num-derive 0.4.1",
  "num-traits",
  "shank",
  "solana-program",
@@ -3275,18 +3275,18 @@ dependencies = [
 
 [[package]]
 name = "shank"
-version = "0.3.0"
+version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57c9395612d493b69a522725eef78a095f199d43eeb847f4a4b77ec0cacab535"
+checksum = "23d894855493d4ce613b25550fe1ed1c62d0af5486b984579ba55e3f8c9631d5"
 dependencies = [
  "shank_macro",
 ]
 
 [[package]]
 name = "shank_macro"
-version = "0.3.0"
+version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8abef069c02e15f62233679b1e71f3152fac10f90b3ff89ebbad6a25b7497754"
+checksum = "a9bf2645f8eebde043da69200195058e7b59806705104f908a31d05ca82844ce"
 dependencies = [
  "proc-macro2 1.0.76",
  "quote 1.0.35",
@@ -3297,9 +3297,9 @@ dependencies = [
 
 [[package]]
 name = "shank_macro_impl"
-version = "0.3.0"
+version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "64d3d92bfcc6e08f882f2264d774d1a2f46dc36122adc1b76416ba6405a29a9c"
+checksum = "93d0593f48acb0a722906416b1f6b8926f6571eb9af16d566a7c65427f269f50"
 dependencies = [
  "anyhow",
  "proc-macro2 1.0.76",
@@ -3310,9 +3310,9 @@ dependencies = [
 
 [[package]]
 name = "shank_render"
-version = "0.3.0"
+version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5a2ea9c6dd95ea311b3b81e63cf4e9c808ed04b098819e6d2c4b1a467d587203"
+checksum = "121175ba61809189f888dc5822ebfd30fa0d91e1e1f61d25a4d40b0847b3075e"
 dependencies = [
  "proc-macro2 1.0.76",
  "quote 1.0.35",
