@@ -21,46 +21,34 @@ import {
 } from '@metaplex-foundation/umi';
 import {
   Serializer,
-  mapSerializer,
+  array,
+  bytes,
   publicKey as publicKeySerializer,
   struct,
+  u8,
 } from '@metaplex-foundation/umi/serializers';
-import {
-  Key,
-  KeyArgs,
-  MyData,
-  MyDataArgs,
-  getKeySerializer,
-  getMyDataSerializer,
-} from '../types';
 
 export type MyAccount = Account<MyAccountAccountData>;
 
 export type MyAccountAccountData = {
-  key: Key;
+  discriminator: Array<number>;
   authority: PublicKey;
-  data: MyData;
+  data: Uint8Array;
 };
 
-export type MyAccountAccountDataArgs = {
-  authority: PublicKey;
-  data: MyDataArgs;
-};
+export type MyAccountAccountDataArgs = MyAccountAccountData;
 
 export function getMyAccountAccountDataSerializer(): Serializer<
   MyAccountAccountDataArgs,
   MyAccountAccountData
 > {
-  return mapSerializer<MyAccountAccountDataArgs, any, MyAccountAccountData>(
-    struct<MyAccountAccountData>(
-      [
-        ['key', getKeySerializer()],
-        ['authority', publicKeySerializer()],
-        ['data', getMyDataSerializer()],
-      ],
-      { description: 'MyAccountAccountData' }
-    ),
-    (value) => ({ ...value, key: Key.MyAccount })
+  return struct<MyAccountAccountData>(
+    [
+      ['discriminator', array(u8(), { size: 8 })],
+      ['authority', publicKeySerializer()],
+      ['data', bytes({ size: 32 })],
+    ],
+    { description: 'MyAccountAccountData' }
   ) as Serializer<MyAccountAccountDataArgs, MyAccountAccountData>;
 }
 
@@ -130,15 +118,18 @@ export function getMyAccountGpaBuilder(
     'MyProgram1111111111111111111111111111111111'
   );
   return gpaBuilder(context, programId)
-    .registerFields<{ key: KeyArgs; authority: PublicKey; data: MyDataArgs }>({
-      key: [0, getKeySerializer()],
-      authority: [1, publicKeySerializer()],
-      data: [33, getMyDataSerializer()],
+    .registerFields<{
+      discriminator: Array<number>;
+      authority: PublicKey;
+      data: Uint8Array;
+    }>({
+      discriminator: [0, array(u8(), { size: 8 })],
+      authority: [8, publicKeySerializer()],
+      data: [40, bytes({ size: 32 })],
     })
-    .deserializeUsing<MyAccount>((account) => deserializeMyAccount(account))
-    .whereField('key', Key.MyAccount);
+    .deserializeUsing<MyAccount>((account) => deserializeMyAccount(account));
 }
 
 export function getMyAccountSize(): number {
-  return 39;
+  return 72;
 }

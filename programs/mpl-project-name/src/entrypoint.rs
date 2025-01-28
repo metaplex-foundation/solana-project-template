@@ -1,20 +1,20 @@
-use solana_program::{
-    account_info::AccountInfo, entrypoint, entrypoint::ProgramResult,
-    program_error::PrintProgramError, pubkey::Pubkey,
+use pinocchio::{
+    account_info::AccountInfo, default_panic_handler, no_allocator, program_entrypoint,
+    pubkey::Pubkey, ProgramResult,
 };
 
-use crate::{error::MplProjectNameError, processor};
+use crate::processor;
 
-entrypoint!(process_instruction);
+program_entrypoint!(process_instruction);
+// Do not allocate memory.
+no_allocator!();
+// Use the default panic handler.
+default_panic_handler!();
+
 fn process_instruction<'a>(
     program_id: &'a Pubkey,
-    accounts: &'a [AccountInfo<'a>],
+    accounts: &'a [AccountInfo],
     instruction_data: &[u8],
 ) -> ProgramResult {
-    if let Err(error) = processor::process_instruction(program_id, accounts, instruction_data) {
-        // catch the error so we can print it
-        error.print::<MplProjectNameError>();
-        return Err(error);
-    }
-    Ok(())
+    processor::process_instruction(program_id, accounts, instruction_data)
 }

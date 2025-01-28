@@ -21,37 +21,34 @@ import {
 } from '@metaplex-foundation/umi';
 import {
   Serializer,
-  mapSerializer,
+  array,
   publicKey as publicKeySerializer,
   string,
   struct,
   u8,
 } from '@metaplex-foundation/umi/serializers';
-import { Key, KeyArgs, getKeySerializer } from '../types';
 
 export type MyPdaAccount = Account<MyPdaAccountAccountData>;
 
-export type MyPdaAccountAccountData = { key: Key; bump: number };
+export type MyPdaAccountAccountData = {
+  discriminator: Array<number>;
+  bump: number;
+  padding: Array<number>;
+};
 
-export type MyPdaAccountAccountDataArgs = { bump: number };
+export type MyPdaAccountAccountDataArgs = MyPdaAccountAccountData;
 
 export function getMyPdaAccountAccountDataSerializer(): Serializer<
   MyPdaAccountAccountDataArgs,
   MyPdaAccountAccountData
 > {
-  return mapSerializer<
-    MyPdaAccountAccountDataArgs,
-    any,
-    MyPdaAccountAccountData
-  >(
-    struct<MyPdaAccountAccountData>(
-      [
-        ['key', getKeySerializer()],
-        ['bump', u8()],
-      ],
-      { description: 'MyPdaAccountAccountData' }
-    ),
-    (value) => ({ ...value, key: Key.MyPdaAccount })
+  return struct<MyPdaAccountAccountData>(
+    [
+      ['discriminator', array(u8(), { size: 8 })],
+      ['bump', u8()],
+      ['padding', array(u8(), { size: 7 })],
+    ],
+    { description: 'MyPdaAccountAccountData' }
   ) as Serializer<MyPdaAccountAccountDataArgs, MyPdaAccountAccountData>;
 }
 
@@ -121,18 +118,22 @@ export function getMyPdaAccountGpaBuilder(
     'MyProgram1111111111111111111111111111111111'
   );
   return gpaBuilder(context, programId)
-    .registerFields<{ key: KeyArgs; bump: number }>({
-      key: [0, getKeySerializer()],
-      bump: [1, u8()],
+    .registerFields<{
+      discriminator: Array<number>;
+      bump: number;
+      padding: Array<number>;
+    }>({
+      discriminator: [0, array(u8(), { size: 8 })],
+      bump: [8, u8()],
+      padding: [9, array(u8(), { size: 7 })],
     })
     .deserializeUsing<MyPdaAccount>((account) =>
       deserializeMyPdaAccount(account)
-    )
-    .whereField('key', Key.MyPdaAccount);
+    );
 }
 
 export function getMyPdaAccountSize(): number {
-  return 2;
+  return 16;
 }
 
 export function findMyPdaAccountPda(

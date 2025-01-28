@@ -54,6 +54,19 @@ export class SerializationErrorError extends ProgramError {
 codeToErrorMap.set(0x2, SerializationErrorError);
 nameToErrorMap.set('SerializationError', SerializationErrorError);
 
+/** InvalidInstruction: Invalid instruction */
+export class InvalidInstructionError extends ProgramError {
+  override readonly name: string = 'InvalidInstruction';
+
+  readonly code: number = 0x3; // 3
+
+  constructor(program: Program, cause?: Error) {
+    super('Invalid instruction', program, cause);
+  }
+}
+codeToErrorMap.set(0x3, InvalidInstructionError);
+nameToErrorMap.set('InvalidInstruction', InvalidInstructionError);
+
 /**
  * Attempts to resolve a custom program error from the provided error code.
  * @category Errors

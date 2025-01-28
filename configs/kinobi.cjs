@@ -41,13 +41,13 @@ kinobi.update(
 );
 
 // Set ShankAccount discriminator.
-const key = (name) => ({ field: "key", value: k.enumValueNode("Key", name) });
-kinobi.update(
-  new k.setAccountDiscriminatorFromFieldVisitor({
-    myAccount: key("MyAccount"),
-    myPdaAccount: key("MyPdaAccount"),
-  })
-);
+// const key = (name) => ({ field: "key", value: k.enumValueNode("Key", name) });
+// kinobi.update(
+//   new k.setAccountDiscriminatorFromFieldVisitor({
+//     myAccount: key("MyAccount"),
+//     myPdaAccount: key("MyPdaAccount"),
+//   })
+// );
 
 // Render JavaScript.
 const jsDir = path.join(clientDir, "js", "src", "generated");

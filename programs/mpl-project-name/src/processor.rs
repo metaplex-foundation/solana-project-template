@@ -1,36 +1,39 @@
 use borsh::BorshDeserialize;
-use solana_program::{
-    account_info::AccountInfo, entrypoint::ProgramResult, msg, program::invoke, pubkey::Pubkey,
-    rent::Rent, system_instruction, system_program, sysvar::Sysvar,
-};
+use bytemuck::from_bytes_mut;
+use pinocchio::account_info::AccountInfo;
+use pinocchio::pubkey::Pubkey;
+use pinocchio::sysvars::rent::Rent;
+use pinocchio::sysvars::Sysvar;
+use pinocchio::ProgramResult;
 
 use crate::error::MplProjectNameError;
 use crate::instruction::accounts::CreateAccounts;
 use crate::instruction::{CreateArgs, MplProjectNameInstruction};
-use crate::state::{Key, MyAccount, MyData};
+use crate::state::MyAccount;
 
-pub fn process_instruction<'a>(
+pub fn process_instruction(
     _program_id: &Pubkey,
-    accounts: &'a [AccountInfo<'a>],
+    accounts: &[AccountInfo],
     instruction_data: &[u8],
 ) -> ProgramResult {
     let instruction: MplProjectNameInstruction =
-        MplProjectNameInstruction::try_from_slice(instruction_data)?;
+        MplProjectNameInstruction::try_from_slice(instruction_data)
+            .map_err(|_| MplProjectNameError::InvalidInstruction)?;
     match instruction {
         MplProjectNameInstruction::Create(args) => {
-            msg!("Instruction: Create");
+            pinocchio::log::sol_log("Instruction: Create");
             create(accounts, args)
         }
     }
 }
 
-fn create<'a>(accounts: &'a [AccountInfo<'a>], args: CreateArgs) -> ProgramResult {
+fn create(accounts: &[AccountInfo], _args: CreateArgs) -> ProgramResult {
     // Accounts.
     let ctx = CreateAccounts::context(accounts)?;
     let rent = Rent::get()?;
 
     // Guards.
-    if *ctx.accounts.system_program.key != system_program::id() {
+    if *ctx.accounts.system_program.key() != pinocchio_system::id() {
         return Err(MplProjectNameError::InvalidSystemProgram.into());
     }
 
@@ -39,29 +42,21 @@ fn create<'a>(accounts: &'a [AccountInfo<'a>], args: CreateArgs) -> ProgramResul
     let lamports: u64 = rent.minimum_balance(space);
 
     // CPI to the System Program.
-    invoke(
-        &system_instruction::create_account(
-            ctx.accounts.payer.key,
-            ctx.accounts.address.key,
-            lamports,
-            space as u64,
-            &crate::id(),
-        ),
-        &[
-            ctx.accounts.payer.clone(),
-            ctx.accounts.address.clone(),
-            ctx.accounts.system_program.clone(),
-        ],
-    )?;
+    pinocchio_system::instructions::CreateAccount {
+        from: ctx.accounts.payer,
+        to: ctx.accounts.address,
+        lamports,
+        space: space as u64,
+        owner: &crate::ID,
+    }
+    .invoke()?;
 
-    let my_account = MyAccount {
-        key: Key::MyAccount,
-        authority: *ctx.accounts.authority.key,
-        data: MyData {
-            field1: args.arg1,
-            field2: args.arg2,
-        },
-    };
+    let mut my_account_data = ctx.accounts.address.try_borrow_mut_data()?;
+    let my_account: &mut MyAccount = from_bytes_mut(&mut my_account_data[..]);
 
-    my_account.save(ctx.accounts.address)
+    my_account.discriminator = [1; 8];
+    my_account.authority = *ctx.accounts.authority.key();
+    my_account.data = [2; 32];
+
+    Ok(())
 }

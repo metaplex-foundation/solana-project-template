@@ -5,7 +5,6 @@
 //! [https://github.com/metaplex-foundation/kinobi]
 //!
 
-use crate::generated::types::Key;
 use borsh::BorshDeserialize;
 use borsh::BorshSerialize;
 use solana_program::pubkey::Pubkey;
@@ -13,12 +12,13 @@ use solana_program::pubkey::Pubkey;
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct MyPdaAccount {
-    pub key: Key,
+    pub discriminator: [u8; 8],
     pub bump: u8,
+    pub padding: [u8; 7],
 }
 
 impl MyPdaAccount {
-    pub const LEN: usize = 2;
+    pub const LEN: usize = 16;
 
     /// Prefix values used to generate a PDA for this account.
     ///

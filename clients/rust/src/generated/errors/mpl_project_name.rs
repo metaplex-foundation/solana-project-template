@@ -19,6 +19,9 @@ pub enum MplProjectNameError {
     /// 2 (0x2) - Error serializing account
     #[error("Error serializing account")]
     SerializationError,
+    /// 3 (0x3) - Invalid instruction
+    #[error("Invalid instruction")]
+    InvalidInstruction,
 }
 
 impl solana_program::program_error::PrintProgramError for MplProjectNameError {

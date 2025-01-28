@@ -4,6 +4,6 @@ pub mod instruction;
 pub mod processor;
 pub mod state;
 
-pub use solana_program;
+use pinocchio_pubkey::declare_id;
 
-solana_program::declare_id!("MyProgram1111111111111111111111111111111111");
+declare_id!("MyProgram1111111111111111111111111111111111");
