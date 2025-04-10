@@ -10,6 +10,7 @@ generateIdl({
   programName: "mpl_project_name_program",
   programId: "MyProgram1111111111111111111111111111111111",
   idlDir,
+  idlName: "mpl_project_name",
   binaryInstallDir,
   programDir: path.join(programDir, "mpl-project-name"),
 });

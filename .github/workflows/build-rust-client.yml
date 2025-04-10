@@ -7,6 +7,8 @@ on:
         type: string
       solana:
         type: string
+      git_ref:
+        type: string
   workflow_dispatch:
     inputs:
       rust:
@@ -29,7 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.git_ref }}
 
       - name: Load environment variables
         run: cat .github/.env >> $GITHUB_ENV
@@ -63,7 +67,7 @@ jobs:
         run: cargo build --all-features --release
 
       - name: Upload Rust client builds
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rust-client-builds
           # First wildcard ensures exported paths are consistently under the clients folder.
