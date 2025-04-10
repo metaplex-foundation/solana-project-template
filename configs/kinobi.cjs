@@ -5,8 +5,8 @@ const k = require("@metaplex-foundation/kinobi");
 const clientDir = path.join(__dirname, "..", "clients");
 const idlDir = path.join(__dirname, "..", "idls");
 
-// Instanciate Kinobi.
-const kinobi = k.createFromIdls([path.join(idlDir, "mpl_project_name_program.json")]);
+// Instantiate Kinobi.
+const kinobi = k.createFromIdls([path.join(idlDir, "mpl_core.json")]);
 
 // Update programs.
 kinobi.update(
