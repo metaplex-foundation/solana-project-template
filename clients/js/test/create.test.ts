@@ -9,7 +9,9 @@ test('it can create new accounts', async (t) => {
   const address = generateSigner(umi);
 
   // When we create a new account.
-  await create(umi, { address, arg1: 1, arg2: 2 }).sendAndConfirm(umi);
+  await create(umi, { address, arg1: 1, arg2: 2, padding: [0] }).sendAndConfirm(
+    umi
+  );
 
   // Then an account was created with the correct data.
   t.like(await fetchMyAccount(umi, address.publicKey), <MyAccount>{

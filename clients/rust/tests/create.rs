@@ -24,6 +24,7 @@ async fn create() {
         .payer(context.payer.pubkey())
         .arg1(1)
         .arg2(2)
+        .padding([0])
         .instruction();
 
     // When we create a new account.

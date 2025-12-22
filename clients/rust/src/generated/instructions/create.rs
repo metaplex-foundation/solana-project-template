@@ -81,6 +81,7 @@ impl CreateInstructionData {
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct CreateInstructionArgs {
+    pub padding: [u8; 1],
     pub arg1: u16,
     pub arg2: u32,
 }
@@ -99,6 +100,7 @@ pub struct CreateBuilder {
     authority: Option<solana_program::pubkey::Pubkey>,
     payer: Option<solana_program::pubkey::Pubkey>,
     system_program: Option<solana_program::pubkey::Pubkey>,
+    padding: Option<[u8; 1]>,
     arg1: Option<u16>,
     arg2: Option<u32>,
     __remaining_accounts: Vec<solana_program::instruction::AccountMeta>,
@@ -131,6 +133,11 @@ impl CreateBuilder {
     #[inline(always)]
     pub fn system_program(&mut self, system_program: solana_program::pubkey::Pubkey) -> &mut Self {
         self.system_program = Some(system_program);
+        self
+    }
+    #[inline(always)]
+    pub fn padding(&mut self, padding: [u8; 1]) -> &mut Self {
+        self.padding = Some(padding);
         self
     }
     #[inline(always)]
@@ -172,6 +179,7 @@ impl CreateBuilder {
                 .unwrap_or(solana_program::pubkey!("11111111111111111111111111111111")),
         };
         let args = CreateInstructionArgs {
+            padding: self.padding.clone().expect("padding is not set"),
             arg1: self.arg1.clone().expect("arg1 is not set"),
             arg2: self.arg2.clone().expect("arg2 is not set"),
         };
@@ -327,6 +335,7 @@ impl<'a, 'b> CreateCpiBuilder<'a, 'b> {
             authority: None,
             payer: None,
             system_program: None,
+            padding: None,
             arg1: None,
             arg2: None,
             __remaining_accounts: Vec::new(),
@@ -364,6 +373,11 @@ impl<'a, 'b> CreateCpiBuilder<'a, 'b> {
         system_program: &'b solana_program::account_info::AccountInfo<'a>,
     ) -> &mut Self {
         self.instruction.system_program = Some(system_program);
+        self
+    }
+    #[inline(always)]
+    pub fn padding(&mut self, padding: [u8; 1]) -> &mut Self {
+        self.instruction.padding = Some(padding);
         self
     }
     #[inline(always)]
@@ -418,6 +432,11 @@ impl<'a, 'b> CreateCpiBuilder<'a, 'b> {
         signers_seeds: &[&[&[u8]]],
     ) -> solana_program::entrypoint::ProgramResult {
         let args = CreateInstructionArgs {
+            padding: self
+                .instruction
+                .padding
+                .clone()
+                .expect("padding is not set"),
             arg1: self.instruction.arg1.clone().expect("arg1 is not set"),
             arg2: self.instruction.arg2.clone().expect("arg2 is not set"),
         };
@@ -449,6 +468,7 @@ struct CreateCpiBuilderInstruction<'a, 'b> {
     authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
     payer: Option<&'b solana_program::account_info::AccountInfo<'a>>,
     system_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    padding: Option<[u8; 1]>,
     arg1: Option<u16>,
     arg2: Option<u32>,
     /// Additional instruction accounts `(AccountInfo, is_writable, is_signer)`.

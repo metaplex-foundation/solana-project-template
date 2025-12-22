@@ -2530,9 +2530,10 @@ dependencies = [
 name = "mpl-project-name-program"
 version = "0.1.0"
 dependencies = [
- "borsh 1.5.7",
+ "bytemuck",
  "num-derive",
  "num-traits",
+ "podded",
  "shank",
  "solana-program",
  "thiserror 2.0.16",
@@ -2928,6 +2929,17 @@ name = "pkg-config"
 version = "0.3.29"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2900ede94e305130c13ddd391e0ab7cbaeb783945ae07a279c268cb05109c6cb"
+
+[[package]]
+name = "podded"
+version = "0.5.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6411950509f69c46f6e045bd815ea6ac590ca9cbb3f8f53ab35b41a3a9b922c7"
+dependencies = [
+ "bytemuck",
+ "paste",
+ "solana-program",
+]
 
 [[package]]
 name = "polyval"

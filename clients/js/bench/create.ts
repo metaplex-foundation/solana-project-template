@@ -11,7 +11,7 @@ test('create a new account', async (t) => {
     const address = generateSigner(umi);
 
     // When we create a new account.
-    const tx = await create(umi, { address, arg1: 1, arg2: 2 }).sendAndConfirm(umi);
+    const tx = await create(umi, { address, arg1: 1, arg2: 2, padding: [0] }).sendAndConfirm(umi);
 
     const compute = Number((await umi.rpc.getTransaction(tx.signature))?.meta.computeUnitsConsumed);
     const account = await umi.rpc.getAccount(address.publicKey);

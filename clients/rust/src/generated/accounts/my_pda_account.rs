@@ -19,10 +19,11 @@ use solana_program::pubkey::Pubkey;
 pub struct MyPdaAccount {
     pub key: Key,
     pub bump: u8,
+    pub padding: [u8; 6],
 }
 
 impl MyPdaAccount {
-    pub const LEN: usize = 2;
+    pub const LEN: usize = 8;
 
     /// Prefix values used to generate a PDA for this account.
     ///

@@ -8,12 +8,14 @@
 
 import {
   Serializer,
+  array,
   struct,
   u16,
   u32,
+  u8,
 } from '@metaplex-foundation/umi/serializers';
 
-export type MyData = { field1: number; field2: number };
+export type MyData = { field1: number; padding: Array<number>; field2: number };
 
 export type MyDataArgs = MyData;
 
@@ -21,6 +23,7 @@ export function getMyDataSerializer(): Serializer<MyDataArgs, MyData> {
   return struct<MyData>(
     [
       ['field1', u16()],
+      ['padding', array(u8(), { size: 2 })],
       ['field2', u32()],
     ],
     { description: 'MyData' }

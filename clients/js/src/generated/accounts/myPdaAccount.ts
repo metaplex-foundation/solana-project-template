@@ -21,6 +21,7 @@ import {
 } from '@metaplex-foundation/umi';
 import {
   Serializer,
+  array,
   mapSerializer,
   publicKey as publicKeySerializer,
   string,
@@ -31,9 +32,16 @@ import { Key, KeyArgs, getKeySerializer } from '../types';
 
 export type MyPdaAccount = Account<MyPdaAccountAccountData>;
 
-export type MyPdaAccountAccountData = { key: Key; bump: number };
+export type MyPdaAccountAccountData = {
+  key: Key;
+  bump: number;
+  padding: Array<number>;
+};
 
-export type MyPdaAccountAccountDataArgs = { bump: number };
+export type MyPdaAccountAccountDataArgs = {
+  bump: number;
+  padding: Array<number>;
+};
 
 export function getMyPdaAccountAccountDataSerializer(): Serializer<
   MyPdaAccountAccountDataArgs,
@@ -48,6 +56,7 @@ export function getMyPdaAccountAccountDataSerializer(): Serializer<
       [
         ['key', getKeySerializer()],
         ['bump', u8()],
+        ['padding', array(u8(), { size: 6 })],
       ],
       { description: 'MyPdaAccountAccountData' }
     ),
@@ -121,9 +130,10 @@ export function getMyPdaAccountGpaBuilder(
     'MyProgram1111111111111111111111111111111111'
   );
   return gpaBuilder(context, programId)
-    .registerFields<{ key: KeyArgs; bump: number }>({
+    .registerFields<{ key: KeyArgs; bump: number; padding: Array<number> }>({
       key: [0, getKeySerializer()],
       bump: [1, u8()],
+      padding: [2, array(u8(), { size: 6 })],
     })
     .deserializeUsing<MyPdaAccount>((account) =>
       deserializeMyPdaAccount(account)
@@ -132,7 +142,7 @@ export function getMyPdaAccountGpaBuilder(
 }
 
 export function getMyPdaAccountSize(): number {
-  return 2;
+  return 8;
 }
 
 export function findMyPdaAccountPda(

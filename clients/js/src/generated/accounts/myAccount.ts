@@ -21,9 +21,11 @@ import {
 } from '@metaplex-foundation/umi';
 import {
   Serializer,
+  array,
   mapSerializer,
   publicKey as publicKeySerializer,
   struct,
+  u8,
 } from '@metaplex-foundation/umi/serializers';
 import {
   Key,
@@ -38,11 +40,13 @@ export type MyAccount = Account<MyAccountAccountData>;
 
 export type MyAccountAccountData = {
   key: Key;
+  padding: Array<number>;
   authority: PublicKey;
   data: MyData;
 };
 
 export type MyAccountAccountDataArgs = {
+  padding: Array<number>;
   authority: PublicKey;
   data: MyDataArgs;
 };
@@ -55,6 +59,7 @@ export function getMyAccountAccountDataSerializer(): Serializer<
     struct<MyAccountAccountData>(
       [
         ['key', getKeySerializer()],
+        ['padding', array(u8(), { size: 7 })],
         ['authority', publicKeySerializer()],
         ['data', getMyDataSerializer()],
       ],
@@ -130,15 +135,21 @@ export function getMyAccountGpaBuilder(
     'MyProgram1111111111111111111111111111111111'
   );
   return gpaBuilder(context, programId)
-    .registerFields<{ key: KeyArgs; authority: PublicKey; data: MyDataArgs }>({
+    .registerFields<{
+      key: KeyArgs;
+      padding: Array<number>;
+      authority: PublicKey;
+      data: MyDataArgs;
+    }>({
       key: [0, getKeySerializer()],
-      authority: [1, publicKeySerializer()],
-      data: [33, getMyDataSerializer()],
+      padding: [1, array(u8(), { size: 7 })],
+      authority: [8, publicKeySerializer()],
+      data: [40, getMyDataSerializer()],
     })
     .deserializeUsing<MyAccount>((account) => deserializeMyAccount(account))
     .whereField('key', Key.MyAccount);
 }
 
 export function getMyAccountSize(): number {
-  return 39;
+  return 48;
 }

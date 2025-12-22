@@ -17,6 +17,7 @@ import {
 } from '@metaplex-foundation/umi';
 import {
   Serializer,
+  array,
   mapSerializer,
   struct,
   u16,
@@ -45,11 +46,16 @@ export type CreateInstructionAccounts = {
 // Data.
 export type CreateInstructionData = {
   discriminator: number;
+  padding: Array<number>;
   arg1: number;
   arg2: number;
 };
 
-export type CreateInstructionDataArgs = { arg1: number; arg2: number };
+export type CreateInstructionDataArgs = {
+  padding: Array<number>;
+  arg1: number;
+  arg2: number;
+};
 
 export function getCreateInstructionDataSerializer(): Serializer<
   CreateInstructionDataArgs,
@@ -59,6 +65,7 @@ export function getCreateInstructionDataSerializer(): Serializer<
     struct<CreateInstructionData>(
       [
         ['discriminator', u8()],
+        ['padding', array(u8(), { size: 1 })],
         ['arg1', u16()],
         ['arg2', u32()],
       ],

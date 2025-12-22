@@ -19,6 +19,7 @@ use solana_program::pubkey::Pubkey;
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct MyAccount {
     pub key: Key,
+    pub padding: [u8; 7],
     #[cfg_attr(
         feature = "serde",
         serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
@@ -28,7 +29,7 @@ pub struct MyAccount {
 }
 
 impl MyAccount {
-    pub const LEN: usize = 39;
+    pub const LEN: usize = 48;
 
     #[inline(always)]
     pub fn from_bytes(data: &[u8]) -> Result<Self, std::io::Error> {

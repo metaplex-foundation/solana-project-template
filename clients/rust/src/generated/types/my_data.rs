@@ -16,5 +16,6 @@ use borsh::{BorshDeserialize, BorshSerialize};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct MyData {
     pub field1: u16,
+    pub padding: [u8; 2],
     pub field2: u32,
 }

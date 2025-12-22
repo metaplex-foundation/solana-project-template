@@ -13,12 +13,12 @@ pub enum MplProjectNameError {
     /// 0 (0x0) - Invalid System Program
     #[error("Invalid System Program")]
     InvalidSystemProgram,
-    /// 1 (0x1) - Error deserializing account
-    #[error("Error deserializing account")]
-    DeserializationError,
-    /// 2 (0x2) - Error serializing account
-    #[error("Error serializing account")]
-    SerializationError,
+    /// 1 (0x1) - Invalid instruction data
+    #[error("Invalid instruction data")]
+    InvalidInstructionData,
+    /// 2 (0x2) - Invalid account data
+    #[error("Invalid account data")]
+    InvalidAccountData,
 }
 
 impl solana_program::program_error::PrintProgramError for MplProjectNameError {

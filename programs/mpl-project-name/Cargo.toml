@@ -10,7 +10,8 @@ publish = false
 crate-type = ["cdylib", "lib"]
 
 [dependencies]
-borsh = "^1.5"
+bytemuck = { version = "1.23", features = ["derive", "min_const_generics"] }
+podded = "0.5"
 shank = "0.4.5"
 num-derive = "^0.4"
 num-traits = "^0.2"

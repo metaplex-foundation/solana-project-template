@@ -11,12 +11,12 @@ pub enum MplProjectNameError {
     /// 0 - Invalid System Program
     #[error("Invalid System Program")]
     InvalidSystemProgram,
-    /// 1 - Error deserializing account
-    #[error("Error deserializing account")]
-    DeserializationError,
-    /// 2 - Error serializing account
-    #[error("Error serializing account")]
-    SerializationError,
+    /// 1 - Invalid instruction data
+    #[error("Invalid instruction data")]
+    InvalidInstructionData,
+    /// 2 - Invalid account data
+    #[error("Invalid account data")]
+    InvalidAccountData,
 }
 
 impl PrintProgramError for MplProjectNameError {
