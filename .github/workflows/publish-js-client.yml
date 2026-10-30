@@ -20,7 +20,7 @@ on:
         type: string
         default: latest
       create_release:
-        description: Open the release pull request
+        description: Open the release pull request and deploy docs
         required: true
         type: boolean
         default: true
@@ -78,7 +78,7 @@ jobs:
     name: Programs
     if: needs.check_tag.outputs.type == 'ref'
     needs: check_tag
-    uses: metaplex-foundation/actions/.github/workflows/build-programs.yml@782403d54939dc66861d8d7c036d6a313d5da37d # v2.0.0
+    uses: metaplex-foundation/actions/.github/workflows/build-programs.yml@759f332a0e956a796b6823d81ede32f76f71853d # v2.0.0
     permissions:
       contents: read
     with:
@@ -88,7 +88,7 @@ jobs:
     name: JS client
     if: needs.check_tag.outputs.type == 'ref'
     needs: [check_tag, build_programs]
-    uses: metaplex-foundation/actions/.github/workflows/test-js-client.yml@782403d54939dc66861d8d7c036d6a313d5da37d # v2.0.0
+    uses: metaplex-foundation/actions/.github/workflows/test-js-client.yml@759f332a0e956a796b6823d81ede32f76f71853d # v2.0.0
     permissions:
       contents: read
     with:
@@ -103,13 +103,18 @@ jobs:
           || (needs.build_programs.result == 'success'
           && needs.test_js.result == 'success'))
     needs: [check_tag, build_programs, test_js]
-    uses: metaplex-foundation/actions/.github/workflows/publish-js-client.yml@782403d54939dc66861d8d7c036d6a313d5da37d # v2.0.0
+    uses: metaplex-foundation/actions/.github/workflows/publish-js-client.yml@759f332a0e956a796b6823d81ede32f76f71853d # v2.0.0
     permissions:
       contents: write
       pull-requests: write
       id-token: write
+    secrets:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     with:
       git_ref: ${{ needs.check_tag.outputs.sha }}
       bump: ${{ inputs.bump }}
       tag: ${{ inputs.tag }}
       create_release: ${{ inputs.create_release }}
+      deploy_docs: true

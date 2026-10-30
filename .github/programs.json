@@ -5,7 +5,6 @@
       "name": "mpl-project-name",
       "deploy": {
         "program_id": "MyProgram1111111111111111111111111111111111",
-        "spill_address": "botTxAkJhuCtNNn9xsH8fHJjzTkcN6XD4dR3R5hkzV2",
         "repo_visibility": "public",
         "clusters": {
           "devnet": {
