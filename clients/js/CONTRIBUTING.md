@@ -53,6 +53,12 @@ package, and the publisher must complete its first publish within two days of be
 The release pull request the workflow opens afterwards needs "Allow GitHub Actions to create and
 approve pull requests" enabled under the repository's Actions settings.
 
+Two template-specific steps come first. A trusted publisher can only be added to a package that
+already exists on npm, so publish the first version by hand from an authenticated `npm publish`
+in `clients/js`. And npm provenance requires the `repository` field of `clients/js/package.json`
+to name the publishing repository exactly: `init.sh` renames the project but leaves the
+`metaplex-foundation` owner, so change it when the project lives under another owner.
+
 To publish JavaScript clients using GitHub actions, we first need the following secret variables to be set up on the repository.
 
 - `VERCEL_TOKEN` — An access token that can deploy to Vercel.
