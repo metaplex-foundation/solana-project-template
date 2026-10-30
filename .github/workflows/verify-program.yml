@@ -1,0 +1,46 @@
+name: Verify Program
+
+on:
+  workflow_dispatch:
+    inputs:
+      git_ref:
+        description: Release tag, commit hash, or branch that was deployed
+        required: true
+        type: string
+      program:
+        description: Program
+        required: true
+        default: mpl-project-name
+        type: choice
+        options: [mpl-project-name]
+      cluster:
+        description: Cluster environment
+        required: true
+        default: mainnet-beta
+        type: choice
+        options: [mainnet-beta, devnet]
+
+permissions: {}
+
+jobs:
+  verify:
+    name: Program
+    uses: metaplex-foundation/actions/.github/workflows/verify-program.yml@269d4cbf2dbbebda3ff5ad7cb00caca8af134fad # v2.0.0
+    permissions:
+      contents: read
+    secrets:
+      RPC_URL: >-
+        ${{ inputs.cluster == 'devnet' && secrets.DEVNET_RPC
+         || inputs.cluster == 'mainnet-beta' && secrets.MAINNET_RPC
+         || '' }}
+      PROGRAM_ID_KEYPAIR: ${{ secrets.PROGRAM_ID }}
+      DEPLOYER_KEYPAIR: >-
+        ${{ inputs.cluster == 'devnet' && secrets.PROGRAM_SOLANA_DEPLOY_KEY
+         || inputs.cluster == 'mainnet-beta' && secrets.PROGRAM_SOLANA_DEPLOY_KEY
+         || startsWith(inputs.cluster, 'sonic') && secrets.PROGRAM_SONIC_DEPLOY_KEY
+         || startsWith(inputs.cluster, 'eclipse') && secrets.PROGRAM_ECLIPSE_DEPLOY_KEY
+         || '' }}
+    with:
+      program: ${{ inputs.program }}
+      cluster: ${{ inputs.cluster }}
+      git_ref: ${{ inputs.git_ref }}
