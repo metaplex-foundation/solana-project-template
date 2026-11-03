@@ -43,7 +43,13 @@ You will need to run `pnpm generate` to re-generate the clients when something c
 
 ## Setting up CI/CD using GitHub actions
 
-Most of the CI/CD should already be set up for you and the `.github/.env` file can be used to tweak the variables of the workflows.
+The workflows under `.github/workflows` are thin callers of the shared reusable workflows in [metaplex-foundation/actions](https://github.com/metaplex-foundation/actions), pinned to a commit that Dependabot keeps current. Everything specific to this repository lives in three files:
+
+- `.github/.env` holds the toolchain pins (Rust, Solana, Node). Only the keys listed in the shared `load-env` action are imported.
+- `.github/programs.json` describes each program (Cargo package and library names, how it is built, release tag prefix, deploy clusters and Squads configuration). See the [schema](https://github.com/metaplex-foundation/actions#programsjson).
+- `.github/file-filters.yml` tells the `Main` workflow which paths belong to which program or client.
+
+The `Deploy Program` and `Verify Program` workflows map this repository's secrets (`PROGRAM_ID`, `PROGRAM_SOLANA_DEPLOY_KEY`, the per-cluster `*_RPC` URLs) onto the fixed secret names the shared workflows take; edit the `secrets:` block in those two files if your secrets are named differently.
 
 However, the "Publish JS Client" workflow — configured in `.github/workflows/publish-js-client.yml` — requires a few more steps to work. See the [CONTRIBUTING.md file of the JavaScript client](./clients/js/CONTRIBUTING.md#setting-up-github-actions) for more information.
 

@@ -1,0 +1,35 @@
+{
+  "$comment": "Program descriptors for the shared CI in metaplex-foundation/actions. Toolchain pins live in .github/.env.",
+  "programs": [
+    {
+      "name": "mpl-project-name",
+      "deploy": {
+        "program_id": "MyProgram1111111111111111111111111111111111",
+        "repo_visibility": "public",
+        "clusters": {
+          "devnet": {
+            "type": "direct"
+          },
+          "mainnet-beta": {
+            "type": "direct"
+          },
+          "sonic-devnet": {
+            "type": "direct"
+          },
+          "sonic-testnet": {
+            "type": "direct"
+          },
+          "eclipse-devnet": {
+            "type": "direct"
+          },
+          "eclipse-testnet": {
+            "type": "direct"
+          },
+          "eclipse-mainnet": {
+            "type": "direct"
+          }
+        }
+      }
+    }
+  ]
+}
