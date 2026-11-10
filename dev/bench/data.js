@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793742030605,
+  "lastUpdate": 1794344236257,
   "repoUrl": "https://github.com/metaplex-foundation/solana-project-template",
   "entries": {
     "Benchmark": [
@@ -23,6 +23,40 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/metaplex-foundation/solana-project-template/commit/758ba0725c7fdab63b4be629753bb4ccfb0134fc"
         },
         "date": 1793742030574,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "CU: create a new account",
+            "value": 3734,
+            "unit": "Compute Units"
+          },
+          {
+            "name": "Space: create a new account",
+            "value": 39,
+            "unit": "Bytes"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "90809591+blockiosaurus@users.noreply.github.com",
+            "name": "blockiosaurus",
+            "username": "blockiosaurus"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "50fcbe04840003d7dfc113218ffa8c3fb258ba0d",
+          "message": "ci: faster shared workflows (actions v2.1.1), Node 24 (#19)\n\n* ci: faster shared workflows (actions v2.1.0 candidate), Node 24\n\nRegenerated from the shared-CI spec against metaplex-foundation/actions\nci/faster-ci: generate_clients runs alongside the client tests instead of\nin front of them, the Rust client clippy and tests share one job, the JS\nclient is tested on NODE_VERSION only, and NODE_VERSION moves to 24.x.\nThe actions side fixes the cargo caches and caches the SBF test tools.\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n\n* ci: repin shared workflows to the review fixes on actions ci/faster-ci\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n\n* ci: pin shared workflows to metaplex-foundation/actions v2.1.0\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n\n* ci: pin shared workflows to metaplex-foundation/actions v2.1.1\n\nv2.1.1 fixes the publish workflows: the shared actions checkout is no\nlonger deleted before the job's post steps run, and the publish and\nrelease steps wait for npm to serve a freshly published version.\n\nCo-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>\n\n---------\n\nCo-authored-by: Claude Fable 5.1 <noreply@anthropic.com>",
+          "timestamp": "2026-11-10T15:53:48-05:00",
+          "tree_id": "83dd5ebab866831e5e93ec15748ed9121077fba7",
+          "url": "https://github.com/metaplex-foundation/solana-project-template/commit/50fcbe04840003d7dfc113218ffa8c3fb258ba0d"
+        },
+        "date": 1794344235514,
         "tool": "customSmallerIsBetter",
         "benches": [
           {
