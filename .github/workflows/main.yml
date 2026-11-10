@@ -15,7 +15,7 @@ permissions: {}
 jobs:
   changes:
     name: Detect changes
-    uses: metaplex-foundation/actions/.github/workflows/detect-changes.yml@d23217f66ec0f17ef88cc9e85f2ee093076ac869 # v2.1.0
+    uses: metaplex-foundation/actions/.github/workflows/detect-changes.yml@e254cd631b3f153962713348579b5080ccc74cd2 # v2.1.1
     permissions:
       contents: read
       pull-requests: read
@@ -24,7 +24,7 @@ jobs:
     name: Programs
     if: needs.changes.outputs.any == 'true'
     needs: changes
-    uses: metaplex-foundation/actions/.github/workflows/build-programs.yml@d23217f66ec0f17ef88cc9e85f2ee093076ac869 # v2.1.0
+    uses: metaplex-foundation/actions/.github/workflows/build-programs.yml@e254cd631b3f153962713348579b5080ccc74cd2 # v2.1.1
     permissions:
       contents: read
 
@@ -32,7 +32,7 @@ jobs:
     name: Programs
     if: needs.changes.outputs.programs == 'true'
     needs: changes
-    uses: metaplex-foundation/actions/.github/workflows/test-programs.yml@d23217f66ec0f17ef88cc9e85f2ee093076ac869 # v2.1.0
+    uses: metaplex-foundation/actions/.github/workflows/test-programs.yml@e254cd631b3f153962713348579b5080ccc74cd2 # v2.1.1
     permissions:
       contents: read
     with:
@@ -42,7 +42,7 @@ jobs:
     name: Generate clients
     if: needs.changes.outputs.any == 'true'
     needs: changes
-    uses: metaplex-foundation/actions/.github/workflows/generate-clients.yml@d23217f66ec0f17ef88cc9e85f2ee093076ac869 # v2.1.0
+    uses: metaplex-foundation/actions/.github/workflows/generate-clients.yml@e254cd631b3f153962713348579b5080ccc74cd2 # v2.1.1
     permissions:
       contents: read
 
@@ -50,7 +50,7 @@ jobs:
     name: JS Client
     if: needs.changes.outputs.js_client == 'true'
     needs: [changes, build_programs]
-    uses: metaplex-foundation/actions/.github/workflows/test-js-client.yml@d23217f66ec0f17ef88cc9e85f2ee093076ac869 # v2.1.0
+    uses: metaplex-foundation/actions/.github/workflows/test-js-client.yml@e254cd631b3f153962713348579b5080ccc74cd2 # v2.1.1
     permissions:
       contents: read
 
@@ -58,7 +58,7 @@ jobs:
     name: Benchmark
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: build_programs
-    uses: metaplex-foundation/actions/.github/workflows/benchmark.yml@d23217f66ec0f17ef88cc9e85f2ee093076ac869 # v2.1.0
+    uses: metaplex-foundation/actions/.github/workflows/benchmark.yml@e254cd631b3f153962713348579b5080ccc74cd2 # v2.1.1
     permissions:
       contents: write
       deployments: write
@@ -70,7 +70,7 @@ jobs:
     name: Benchmark Summary
     if: github.event_name == 'pull_request'
     needs: build_programs
-    uses: metaplex-foundation/actions/.github/workflows/benchmark.yml@d23217f66ec0f17ef88cc9e85f2ee093076ac869 # v2.1.0
+    uses: metaplex-foundation/actions/.github/workflows/benchmark.yml@e254cd631b3f153962713348579b5080ccc74cd2 # v2.1.1
     permissions:
       contents: write
       deployments: write
@@ -82,7 +82,7 @@ jobs:
     name: Rust Client
     if: needs.changes.outputs.rust_client == 'true'
     needs: [changes, build_programs]
-    uses: metaplex-foundation/actions/.github/workflows/test-rust-client.yml@d23217f66ec0f17ef88cc9e85f2ee093076ac869 # v2.1.0
+    uses: metaplex-foundation/actions/.github/workflows/test-rust-client.yml@e254cd631b3f153962713348579b5080ccc74cd2 # v2.1.1
     permissions:
       contents: read
     with:
